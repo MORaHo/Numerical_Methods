@@ -1,31 +1,33 @@
 import matrix
-
+from utils import copy
 Matrix = matrix.Matrix
 
 def meg(A:Matrix):
-
-    for k in range(len(A)-1):
-        largest_value = A[k][k]
-        row = k
+    
+    M = copy(A)
+    for k in range(len(M)-1):
         
-        for i in range(k,len(A)):
-            if A[i][k] > largest_value:
-                largest_value = A[i][k]
+        largest_value = M[k][k]
+        row = k 
+        for i in range(k,len(M)):
+            if abs(M[i][k]) > abs(largest_value):
+                largest_value = M[i][k]
                 row = i
 
-        if row != k:
-            temp = A[k]
-            A[k]=A[row]
-            A[row]=temp
+        if row != k: #pivoting
+            temp = M[k]
+            M[k]=M[row]
+            M[row]=temp
        
-        if A[k][k] == 0:
+        if M[k][k] == 0:
             continue
 
-        A_kk = A[k][k]
-        for j in range(k+1,len(A)):
-            l_kj = A[j][k]/A_kk
-            A[j] = [ A[j][w]-l_kj*A[k][w] if A[j][w]!=0 else A[j][w] for w in range(0,len(A[0]))]
+        A_kk = M[k][k]
+        for j in range(k+1,len(M)):
+
+            l_kj = M[j][k]/A_kk
+            M[j] = [ M[j][c]-l_kj*M[k][c] for c in range(0,len(M[0]))]
             # the else in the last line of code amends the reduction of the list size that would otherwise occur for some reason
 
-    return A
+    return M
 
