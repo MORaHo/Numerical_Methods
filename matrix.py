@@ -56,23 +56,32 @@ class Matrix():
         A = self.matrix
         if len(A) == len(B) and len(A[0]) == len(B[0]):
             C = [ [ A[i][j]+B[i][j] for j in range(len(B[0])) ] for i in range(len(B)) ]
-            C = Matrix(C)
-            return C
+            return Matrix(C)
         else:
             print("Matrix dimensions don't match")
             sys.exit()
 
-    def __mul__(self,B):
+    def __mul__(self,B): # scalar multiplication and dot product
+
         A = self.matrix
 
-        if len(A[0]) != len(B):
+        if type(B) in numbers.__args__: #allows element wise moltiplication by scalar with the matrix
+            A = self.matrix
+            Z = [[ 0 for _ in range(len(A[0]))] for _ in range(len(A))]
+            for j in range(len(A)):
+                for i in range(len(A[0])):
+                    Z[j][i] = B*A[j][i]
+            
+            return Matrix(Z)
+
+        elif len(A[0]) != len(B): #if the dimensions don't match the dotproduct cannot be performed
             print("Dimensions of the two matrices don't match")
             sys.exit()
 
-        Z = [[ 0 for _ in range(len(B[0]))] for _ in range(len(A))]
-        
+        Z = [[ 0 for _ in range(len(B[0]))] for _ in range(len(A))] 
         n = len(A[0])
         
+        #dot-product
         for i in range(len(B[0])):
             for j in range(len(A)):
                 sum = 0
@@ -81,8 +90,6 @@ class Matrix():
                 Z[j][i] = sum
 
         return Matrix(Z)
-        
-
 
     def reshape(self,rows:int,columns:int):
 
@@ -117,3 +124,4 @@ def conj(integer:numbers):
 #C = Matrix([[1,2,3],[4,5,6]])
 #A = B*C
 #print(A)
+

@@ -1,4 +1,6 @@
-from matrix import Matrix
+import matrix
+
+Matrix = matrix.Matrix
 
 def meg(A:Matrix):
 

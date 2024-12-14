@@ -1,6 +1,7 @@
-from matrix import Matrix
+import matrix
 from typing import Union
 
+Matrix = matrix.Matrix
 numbers = Union[int,float,complex]
 
 def eye(m:int,n:int=1):
@@ -11,3 +12,6 @@ def zeros(m:int,n:int=1):
     Z = [ [ 0 for _ in range(m) ] for _ in range(n) ]
     return Matrix(Z)
 
+def copy(A:Matrix):
+    N = [[ A[j][i] for i in range(len(A))] for j in range(len(A[0]))]
+    return Matrix(N)
