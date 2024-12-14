@@ -105,8 +105,6 @@ class Matrix():
             self.rows = rows
             self.columns = columns
 
-def conj(integer:numbers):
-    return integer.real-integer.imag
 
 #test1 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
 #test2 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
