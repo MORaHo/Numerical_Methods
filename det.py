@@ -7,7 +7,3 @@ def det(A:Matrix):
     for i in range(len(A)):
         det *= (U[i][i] * L[i][i])
     return det
-
-A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
-[L,U,P] = lu(A)
-print(A)

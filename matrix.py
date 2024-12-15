@@ -22,6 +22,7 @@ class Matrix():
             self.rows = rows
             self.columns = columns
             self.matrix = [ [ data[i*self.rows+j] for j in range(self.columns) ] for i in range(self.rows) ]
+        self.T = self.transpose()
     
     def __getitem__(self,index):
         return self.matrix[index]
@@ -31,24 +32,18 @@ class Matrix():
 
     def __len__(self):
         return len(self.matrix)
-    
+
     def __str__(self):
-        string = "["
-
-        for i in range(len(self.matrix)):
-            if i != 0:
-                string += " "
-            string += "["
-            for j in range(len(self.matrix[0])):
-                number = format(float(self.matrix[i][j]),'.4')
+               
+        string = "\n"
+        
+        for j in range(len(self.matrix)):
+            string += "  "
+            for i in range(len(self.matrix[0])):
+                number = format(float(self.matrix[j][i]),'.4')
                 string += str(number)
-
-                if j != len(self.matrix[0])-1:
-                    string += ", "
-            if i != len(self.matrix)-1:
-                string += "],\n"
-            else:
-                string += "]]\n"
+                string += "  "
+            string += ("\n" + (j<len(self.matrix)-1)*"\n")
         return string
 
 
@@ -105,8 +100,17 @@ class Matrix():
             self.rows = rows
             self.columns = columns
 
+    def transpose(self):
 
-#test1 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
+        A = self.matrix
+        M = [ [ A[i][j] for j in range(len(A)) ] for i in range(len(A[0])) ]
+        return Matrix(M)
+        
+
+
+
+test1 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
+print(test1.T)
 #test2 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
 #print(test1[1][2])
 #test2 = Matrix([1,2,3,4,5,6,7,8,9],3,3)

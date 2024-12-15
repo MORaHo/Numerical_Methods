@@ -37,7 +37,7 @@ def lu(A:Matrix):
             L[row] = temp
 
         A_kk = U[k][k]
-        for j in range(k+1,len(U)):
+        for j in range(k+1,len(U)): # MEG and generating L matrix
             
             l_jk = U[j][k]/A_kk
             U[j] = [ U[j][c]- l_jk*A[k][c] for c in range(0,len(U[0])) ]
