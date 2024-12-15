@@ -9,21 +9,26 @@ class Matrix():
     "A matrix class for use in working with numerical methods"
     
     def __init__(self,data,rows:int=0,columns:int=1):
-        if rows == 0: #automatically make a column vector if no size if given
-            rows = len(data)
+
         if type(data) == list and type(data[0]) == list:
             self.matrix = data
             self.rows = len(data)
             self.columns = len(data[0])
+
+        elif rows == 0:
+            rows = len(data)
+
         elif len(data) != rows*columns:
             print("Data does fit in the matrix")
             sys.exit()
+
         else:
             self.rows = rows
             self.columns = columns
             self.matrix = [ [ data[i*self.rows+j] for j in range(self.columns) ] for i in range(self.rows) ]
+
         self.T = self.transpose()
-    
+
     def __getitem__(self,index):
         return self.matrix[index]
 
@@ -103,8 +108,8 @@ class Matrix():
     def transpose(self):
 
         A = self.matrix
-        M = [ [ A[i][j] for j in range(len(A)) ] for i in range(len(A[0])) ]
-        return Matrix(M)
+        T = [ [ A[j][i] for j in range(len(A)) ] for i in range(len(A[0])) ]
+        return T
         
 
 
