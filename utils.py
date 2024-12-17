@@ -16,7 +16,3 @@ def copy(A:Matrix):
     N = [[ A[j][i] for i in range(len(A[0]))] for j in range(len(A))]
     return Matrix(N)
 
-def conj(integer:numbers):
-    return integer.real-integer.imag
-
-
