@@ -67,6 +67,7 @@ class Matrix():
         A = self.matrix
 
         if type(B) in numbers.__args__: #allows element wise moltiplication by scalar with the matrix
+
             A = self.matrix
             Z = [[ 0 for _ in range(len(A[0]))] for _ in range(len(A))]
             for j in range(len(A)):
@@ -92,7 +93,10 @@ class Matrix():
 
         return Matrix(Z)
 
-
+    def __truediv__(self,s):
+        A = self.matrix
+        S = [[A[j][i]/s  for i in range(len(A[0])) ] for j in range(len(A))]
+        return Matrix(S)
 
     def reshape(self,rows:int,columns:int):
 
@@ -123,8 +127,8 @@ class Matrix():
 def conj(integer:numbers):
     return complex(integer.real,-1*integer.imag)
 
-test1 = Matrix([[1-1j,1,1,1],[1,0,0,1],[1,1,1,1]])
-print(test1.H)
+#test1 = Matrix([[1-1j,1,1,1],[1,0,0,1],[1,1,1,1]])
+#print(test1.H)
 #test2 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
 #print(test1[1][2])
 #test2 = Matrix([1,2,3,4,5,6,7,8,9],3,3)
