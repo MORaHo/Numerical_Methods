@@ -31,9 +31,9 @@ def eig(A:Matrix):
         iter += 1
     return lambda_
 
-A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
+#A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
 
-print(eig(A))
+#print(eig(A))
 
 
 
