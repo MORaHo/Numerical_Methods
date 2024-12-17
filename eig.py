@@ -17,8 +17,6 @@ def eig(A:Matrix):
     y = x/norm(x,3)
     iter = 0
     rel_err = 1
-    print(y.H)
-    print(A)
     lambda_ = (Matrix(y.H) * A * y)[0][0] # eventhough its a 1x1 matrix it's still a matrix so to get the value it needs to be extracted
 
     while iter < nmax and rel_err > toll:
@@ -26,7 +24,7 @@ def eig(A:Matrix):
         x = A * y
         y = x/norm(x,3)
         old_lambda = lambda_
-        lambda_ = (Matrix(y.H)*A*y)[0][0] # safe as a said before
+        lambda_ = (Matrix(y.H)*A*y)[0][0] # safe as a said before, Rayleigh quotient
         rel_err = abs(lambda_-old_lambda)/abs(lambda_) #this is the reason we need to extract the value
         iter += 1
     return lambda_

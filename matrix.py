@@ -62,7 +62,7 @@ class Matrix():
             print("Matrix dimensions don't match")
             sys.exit()
 
-    def __mul__(self,B): # scalar multiplication and dot product
+    def __mul__(self,B): # element-wise scalar multiplication and dot product
 
         A = self.matrix
 
@@ -93,12 +93,12 @@ class Matrix():
 
         return Matrix(Z)
 
-    def __truediv__(self,s):
+    def __truediv__(self,s): #element-wise division
         A = self.matrix
         S = [[A[j][i]/s  for i in range(len(A[0])) ] for j in range(len(A))]
         return Matrix(S)
 
-    def reshape(self,rows:int,columns:int):
+    def reshape(self,rows:int,columns:int): #allows the dimensioning of a matrix is needed
 
         if rows*columns != self.columns*self.rows:
             print("Requested reshape does not match matrix size")
