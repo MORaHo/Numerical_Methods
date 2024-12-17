@@ -28,6 +28,7 @@ class Matrix():
             self.matrix = [ [ data[i*self.rows+j] for j in range(self.columns) ] for i in range(self.rows) ]
 
         self.T = self.transpose()
+        self.H = self.Htranspose()
 
     def __getitem__(self,index):
         return self.matrix[index]
@@ -91,6 +92,8 @@ class Matrix():
 
         return Matrix(Z)
 
+
+
     def reshape(self,rows:int,columns:int):
 
         if rows*columns != self.columns*self.rows:
@@ -110,12 +113,18 @@ class Matrix():
         A = self.matrix
         T = [ [ A[j][i] for j in range(len(A)) ] for i in range(len(A[0])) ]
         return T
-        
+    
+    def Htranspose(self): #complex conjugate equivalent of the tranpose
 
+        A = self.matrix
+        H = [ [ conj(A[j][i]) if type(A[j][i]) == complex else A[j][i] for j in range(len(A)) ] for i in range(len(A[0])) ]
+        return H
 
+def conj(integer:numbers):
+    return complex(integer.real,-1*integer.imag)
 
-test1 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
-print(test1.T)
+test1 = Matrix([[1-1j,1,1,1],[1,0,0,1],[1,1,1,1]])
+print(test1.H)
 #test2 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
 #print(test1[1][2])
 #test2 = Matrix([1,2,3,4,5,6,7,8,9],3,3)
