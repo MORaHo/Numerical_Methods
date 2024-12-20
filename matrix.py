@@ -90,8 +90,11 @@ class Matrix():
                 for k in range(n):
                     sum += A[j][k] * B[k][i]
                 Z[j][i] = sum
-
-        return Matrix(Z)
+        
+        if len(Z) == 1 and len(Z[0]) == 1:
+            return Z[0][0]
+        else:
+            return Matrix(Z)
 
     def __truediv__(self,s): #element-wise division
         A = self.matrix
