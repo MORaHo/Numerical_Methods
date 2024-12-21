@@ -1,5 +1,6 @@
 import matrix
 from norm import norm
+from inv import inv
 
 Matrix = matrix.Matrix
 
@@ -29,9 +30,27 @@ def eig(A:Matrix):
         iter += 1
     return lambda_
 
-A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
+def mineig(A:Matrix): # used to find minimum eigen value, which is needed to see if a matrix is defined positive
+    invA = inv(A)
+    x = Matrix([ [1] for _ in range(len(A)) ])
+    y = x/norm(x,3)
+    iter = 0
+    rel_err = 1
+    lambda_ = Matrix(y.H) * A * y
 
-print(eig(A))
+    while iter < nmax and rel_err > toll:
+
+        x = invA*y
+        y = x/norm(x,3)
+        old_lambda = lambda_
+        lambda_ = Matrix(y.H)*A*y
+        rel_err = abs(lambda_-old_lambda)/abs(lambda_)
+        iter += 1
+    return lambda_
+
+#A = Matrix([[1,2,4],[4,5,6],[7,8,9]])
+
+#print(mineig(A))
 
 
 

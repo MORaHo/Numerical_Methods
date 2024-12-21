@@ -6,6 +6,7 @@ from utils import copy
 from math import sqrt
 
 def norm(M:Matrix,type_ = 2):
+    
     A = copy(M)
     
     match type_:
