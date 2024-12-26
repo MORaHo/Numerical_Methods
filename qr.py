@@ -19,8 +19,8 @@ def qr_decomp(A:Matrix):
         for i in range(k):
             u_k -= e_k[i] * ( Matrix(a_k.T) * e_k[i] )
 
-        e_i = u_k/norm(u_k,3):w
-        e_k.append(e_i) 
+        e_i = u_k/norm(u_k,3)
+        e_k.append(e_i) #
         
         for i in range(0,k+1):
             R[i][k] = Matrix(a_k.T)*e_k[i]
