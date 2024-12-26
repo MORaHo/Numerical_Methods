@@ -57,7 +57,7 @@ def eig(A:Matrix):
     A_k = A
     nmax = 1000
     k = 0  
-    while k < nmax:
+    while k < nmax: #I don't know what the end loop conditions are so currently it's only limited by the numbers of iterations
 
         [Q_k,R_k] = qr_decomp(A_k)
         A_k = R_k*Q_k #iteration of A_k to make it into a upper triangular matrix with the eigen values on the primary diagonal
