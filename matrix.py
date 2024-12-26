@@ -15,8 +15,11 @@ class Matrix():
             self.rows = len(data)
             self.columns = len(data[0])
 
-        elif rows == 0:
-            rows = len(data)
+        elif rows == 0: #create column vector
+            
+            self.rows = len(data)
+            self.columns = columns
+            self.matrix = [ [ data[i+j*self.columns] for j in range(self.columns) ] for i in range(self.rows) ]
 
         elif len(data) != rows*columns:
             print("Data does fit in the matrix")
@@ -100,6 +103,19 @@ class Matrix():
         A = self.matrix
         S = [[A[j][i]/s  for i in range(len(A[0])) ] for j in range(len(A))]
         return Matrix(S)
+
+    def __sub__(self,s): #subdivision
+        A = self.matrix
+        S = [ [ 0 for _ in range(len(A[0])) ] for _ in range(len(A)) ]
+        if len(A) != len(s) or len(A[0]) != len(s[0]):
+            print("Matrix dimensions do not match")
+            sys.exit()
+        else:
+            for i in range(len(A)):
+                for j in range(len(A[0])):
+                    S[i][j] = A[i][j] - s[i][j]
+            
+            return Matrix(S)
 
     def reshape(self,rows:int,columns:int): #allows the dimensioning of a matrix is needed
 

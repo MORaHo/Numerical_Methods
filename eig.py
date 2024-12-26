@@ -1,6 +1,8 @@
 import matrix
 from norm import norm
 from inv import inv
+from qr import qr_decomp
+from utils import zeros, diag, ones
 
 Matrix = matrix.Matrix
 
@@ -11,8 +13,10 @@ nmax = 1000
 # This is a calculation of the maximum eigen value of matrix, #
 # I will probably implement the QR method at a later date     #
 ###############################################################
+# Done! (it doesn't work for one matrix idk why though)       #
+###############################################################
 
-def eig(A:Matrix):
+def maxeig(A:Matrix):
 
     x = Matrix([ [1] for _ in range(len(A)) ]) # initial guess
     y = x/norm(x,3)
@@ -48,9 +52,23 @@ def mineig(A:Matrix): # used to find minimum eigen value, which is needed to see
         iter += 1
     return lambda_
 
-#A = Matrix([[1,2,4],[4,5,6],[7,8,9]])
+def eig(A:Matrix):
+    
+    A_k = A
+    nmax = 1000
+    k = 0  
+    while k < nmax:
 
-#print(mineig(A))
+        [Q_k,R_k] = qr_decomp(A_k)
+        A_k = R_k*Q_k #iteration of A_k to make it into a upper triangular matrix with the eigen values on the primary diagonal
+        k+= 1
+
+    return A_k
+
+
+#A = diag(ones(10,1)*2)+diag(ones(9,1)*-1,-1)+diag(ones(9,1)*-1,1)
+#A = Matrix([[1,1,0],[1,0,1],[0,1,1]]) #the only matrix that doesn't work
+#print(eig(A))
 
 
 
