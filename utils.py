@@ -10,12 +10,12 @@ def eye(m:int,n:int=1):
     return Matrix(I)
 
 def ones(m:int,n:int=1):
-    Z = [ [ 1 for _ in range(m) ] for _ in range(n) ]
+    Z = [ [ 1 for _ in range(n) ] for _ in range(m) ]
     return Matrix(Z)
 
 
 def zeros(m:int,n:int=1):
-    Z = [ [ 0 for _ in range(m) ] for _ in range(n) ]
+    Z = [ [ 0 for _ in range(n) ] for _ in range(m) ]
     return Matrix(Z)
 
 def copy(A:Matrix):
@@ -23,6 +23,7 @@ def copy(A:Matrix):
     return Matrix(N)
 
 def diag(A:Matrix,offset_:int=0):
+
     if len(A) == 1 or len(A[0]) == 1: # matrix is a vector so we create a matrix
 
         shift_y = (offset_ < 0)
