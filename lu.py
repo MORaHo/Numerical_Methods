@@ -1,7 +1,6 @@
 import matrix
 from utils import eye,zeros,copy
 import sys
-from vand import vand
 
 Matrix = matrix.Matrix
 
