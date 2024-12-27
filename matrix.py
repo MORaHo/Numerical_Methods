@@ -19,7 +19,7 @@ class Matrix():
             
             self.rows = len(data)
             self.columns = columns
-            self.matrix = [ [ data[i+j*self.columns] for j in range(self.columns) ] for i in range(self.rows) ]
+            self.matrix = [ [ data[i] ] for i in range(self.rows) ]
 
         elif len(data) != rows*columns:
             print("Data does fit in the matrix")
@@ -43,7 +43,7 @@ class Matrix():
         return len(self.matrix)
 
     def __str__(self):
-               
+
         string = "\n"
         
         for j in range(len(self.matrix)):
@@ -142,6 +142,17 @@ class Matrix():
         A = self.matrix
         H = [ [ conj(A[j][i]) if type(A[j][i]) == complex else A[j][i] for j in range(len(A)) ] for i in range(len(A[0])) ]
         return H
+
+    def col(self):
+
+        x = self.matrix
+        if len(x) != 1 and len(x[0]) != 1: #it's a matrix not a vector
+            print("Cannot take the column of a matrix, function requires vector")
+            sys.exit()
+        elif len(x) == 1: #matrix is row vector, need to return row vector
+            return Matrix(self.T)
+        elif len(x[0]) == 1: #it's a column vector, no change is needed
+            return Matrix(x)
 
 def conj(integer:numbers):
     return complex(integer.real,-1*integer.imag)
