@@ -5,7 +5,7 @@ numbers = Union[int,float,complex]
 from utils import copy
 from math import sqrt
 
-def norm(M:Matrix,type_ = 2):
+def norm(M:Matrix,type_ = 3): #this will be changes to 2 when the spectral norm is implemented
     
     A = copy(M)
     
