@@ -13,7 +13,6 @@ def ones(m:int,n:int=1):
     Z = [ [ 1 for _ in range(n) ] for _ in range(m) ]
     return Matrix(Z)
 
-
 def zeros(m:int,n:int=1):
     Z = [ [ 0 for _ in range(n) ] for _ in range(m) ]
     return Matrix(Z)
@@ -64,10 +63,3 @@ def diag(A:Matrix,offset_:int=0):
     else:
         print("Matrix is not vector or square matrix")
         sys.exit()
-
-#A = Matrix([1,2,3],1,3)
-#B = Matrix([[1],[2],[3]])
-#print(A)
-#print(diag(A,0))
-#print(B)
-#print(diag(B,0))
