@@ -55,7 +55,6 @@ def inv(M:Matrix):
 
     end = len(A[0])
     
-
     for j in range(len(A)):
         A[j] = [ A[j][i] for i in range(len(A),end) ]
     
