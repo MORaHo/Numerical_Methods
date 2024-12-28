@@ -38,16 +38,11 @@ def backward_substitution(U:Matrix,y:Matrix):
 bkw_sub = backward_substitution
 
 def solve(A:Matrix,b:Matrix):
-
+    
+    #this will be expanded to handle more and more cases, initially I intend to add a QR solver and for this function to basically become the \ of matlab
     [L,U,_] = lu(A)
     y = forward_substitution(L,b)
     x = backward_substitution(U,y)
 
     return x
-
-A = Matrix([[1,2,0],[2,1,2],[0,2,1]])
-xex = Matrix([1,1,1])
-b = A*xex
-x = solve(A,b)
-print(x)
 
