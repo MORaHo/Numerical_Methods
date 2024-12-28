@@ -27,7 +27,6 @@ def meg(A:Matrix):
 
             l_kj = M[j][k]/A_kk
             M[j] = [ M[j][c]-l_kj*M[k][c] for c in range(0,len(M[0]))]
-            # the else in the last line of code amends the reduction of the list size that would otherwise occur for some reason
 
     return M
 
