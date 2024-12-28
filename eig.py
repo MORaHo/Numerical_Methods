@@ -1,13 +1,14 @@
 import matrix
 from norm import norm
 from inv import inv
-from qr import qr_decomp
+from qr import qr
 from utils import zeros, diag, ones
+from vand import vand
 
 Matrix = matrix.Matrix
 
 toll = 1e-12
-nmax = 1000
+nmax = 250
 
 ###############################################################
 # This is a calculation of the maximum eigen value of matrix, #
@@ -55,20 +56,17 @@ def mineig(A:Matrix): # used to find minimum eigen value, which is needed to see
 def eig(A:Matrix):
     
     A_k = A
-    nmax = 1000
     k = 0  
     while k < nmax: #I don't know what the end loop conditions are so currently it's only limited by the numbers of iterations
 
-        [Q_k,R_k] = qr_decomp(A_k)
+        [Q_k,R_k] = qr(A_k)
         A_k = R_k*Q_k #iteration of A_k to make it into a upper triangular matrix with the eigen values on the primary diagonal
         k+= 1
+    
+    lambdas = [ A_k[i][i] for i in range(len(A_k))] #vector of eigenvalues to be exported on the principal diagonal of the A_k matrix
 
-    return A_k
+    return Matrix(lambdas)
 
-
-#A = diag(ones(10,1)*2)+diag(ones(9,1)*-1,-1)+diag(ones(9,1)*-1,1)
-#A = Matrix([[1,1,0],[1,0,1],[0,1,1]]) #the only matrix that doesn't work
-#print(eig(A))
 
 
 
