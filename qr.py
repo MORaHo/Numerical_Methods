@@ -37,4 +37,4 @@ def qr_decomposition(A:Matrix):
     return [Matrix(Q),R]
 
 qr = qr_decomposition
-#the error understandable increases as the size of the matrix increases
+#the error understandably increases as the size of the matrix increases

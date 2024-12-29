@@ -60,6 +60,7 @@ def diag(A:Matrix,offset_:int=0):
                     B.append([A[j][i]])
         
         return Matrix(B)
+
     else:
         print("Matrix is not vector or square matrix")
         sys.exit()

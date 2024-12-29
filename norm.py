@@ -40,11 +40,4 @@ def norm(M:Matrix,type_ = 3): #this will be changes to 2 when the spectral norm 
             
             return sqrt(norm)
 
-#A = [[-3,5,7],[2,6,4],[0,2,8]]
-#print(norm(Matrix(A),1))
-##print(norm(Matrix(A),100))
-
-
-
-
 

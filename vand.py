@@ -6,7 +6,7 @@ Matrix = matrix.Matrix
 def vandermonde(x:Matrix,n:int):
     
     V = []
-    if not( len(x) == 1 or len(x[0]) == 1 ): #both matricies are vectors
+    if not( len(x) == 1 or len(x[0]) == 1 ): #checking if x is a vectors
         print("Object is not a vector")
         sys.exit()
     

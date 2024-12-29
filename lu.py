@@ -4,7 +4,7 @@ import sys
 
 Matrix = matrix.Matrix
 
-def lu(A:Matrix):
+def LU_decomposition(A:Matrix):
 
     #global U
     U = copy(A)
@@ -49,4 +49,5 @@ def lu(A:Matrix):
     
     return [L,U,P]
 
+lu = LU_decomposition
 

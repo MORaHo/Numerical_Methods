@@ -2,8 +2,6 @@ import matrix
 from norm import norm
 from inv import inv
 from qr import qr
-from utils import zeros, diag, ones
-from vand import vand
 
 Matrix = matrix.Matrix
 
@@ -66,14 +64,5 @@ def eig(A:Matrix):
     lambdas = [ A_k[i][i] for i in range(len(A_k))] #vector of eigenvalues to be exported on the principal diagonal of the A_k matrix
 
     return Matrix(lambdas)
-
-
-
-
-
-
-
-
-
 
 

@@ -157,21 +157,4 @@ class Matrix():
 def conj(integer:numbers):
     return complex(integer.real,-1*integer.imag)
 
-#test1 = Matrix([[1-1j,1,1,1],[1,0,0,1],[1,1,1,1]])
-#print(test1.H)
-#test2 = Matrix([[1,1,1,1],[1,0,0,1],[1,1,1,1]])
-#print(test1[1][2])
-#test2 = Matrix([1,2,3,4,5,6,7,8,9],3,3)
-#print(test2[1][2])
-#test3 = Matrix([[1,2,3],[4,5,6],[7,8,9]],columns = 1, rows = 2)
-#print(test1.matrix)
-#test1.reshape(rows = 4,columns = 3)
-#print(test1.matrix)
-#print(conj(1))
-#C = test1+test2
-#print(C)
-#B = Matrix([[1,2],[2,1]])
-#C = Matrix([[1,2,3],[4,5,6]])
-#A = B*C
-#print(A)
 
