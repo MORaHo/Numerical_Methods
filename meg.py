@@ -2,7 +2,7 @@ import matrix
 from utils import copy
 Matrix = matrix.Matrix
 
-def meg(A:Matrix):
+def gaussian_elimination(A:Matrix):
     
     M = copy(A)
     for k in range(len(M)-1):
@@ -29,5 +29,7 @@ def meg(A:Matrix):
             M[j] = [ M[j][c]-l_kj*M[k][c] for c in range(0,len(M[0]))]
 
     return M
+
+meg = ref = gaussian_elimination  
 
 
