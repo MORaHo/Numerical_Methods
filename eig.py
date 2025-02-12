@@ -1,6 +1,5 @@
 from matrix import Matrix
-from norm import norm
-from inv import inv
+from utils import diag
 from qr import qr
 
 toll = 2e-16 #tolerance we'll be using for power methods
@@ -18,11 +17,6 @@ def eig(A:Matrix):
     
     lambdas = [ A_k[i][i] for i in range(len(A_k))] #vector of eigenvalues to be exported on the principal diagonal of the A_k matrix
 
-    return Matrix(lambdas)
+    return diag(Matrix(lambdas))
 
-power_method = maxeig
-inverse_power_method = mineig
 eigen = eig
-
-A = Matrix([1,2,3,4,5,6,7,8,9],3,3)
-print(maxeig(A)[0])

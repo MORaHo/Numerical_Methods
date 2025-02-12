@@ -50,4 +50,3 @@ def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
 
     print("Converged in",k,"iterations.")
     return [x,k]
-
