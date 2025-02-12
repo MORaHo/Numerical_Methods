@@ -5,6 +5,10 @@ import sys
 Matrix = matrix.Matrix
 
 def LU_decomposition(A:Matrix):
+    
+    """
+    Function that performs LU factorization of a matrix
+    """
 
     #global U
     U = copy(A)

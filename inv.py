@@ -5,11 +5,10 @@ import sys
 
 Matrix = matrix.Matrix
 
-##############################################
-# This function utilizes Gauss-Jordan        #
-# eliminiation to find the inverse matrix    #
-##############################################
-
+############################################
+# This function utilizes Gauss-Jordan      #
+# eliminiation to find the inverse matrix  #
+############################################
 
 def inv(M:Matrix):
 

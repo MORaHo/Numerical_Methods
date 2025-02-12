@@ -64,3 +64,13 @@ def diag(A:Matrix,offset_:int=0):
     else:
         print("Matrix is not vector or square matrix")
         sys.exit()
+
+def tril(A:Matrix):
+    n = len(A)
+    m = len(A[0])
+    M = zeros(n,m)
+    for i in range(n):
+        for j in range(m):
+            if i >= j:
+                M[i][j] = A[i][j]
+    return M
