@@ -74,3 +74,9 @@ def tril(A:Matrix):
             if i >= j:
                 M[i][j] = A[i][j]
     return M
+
+def linspace(a, b, n:int=100):
+    if n < 2:
+        return b
+    diff = (float(b) - a)/(n - 1)
+    return [a + diff*i  for i in range(n)]
