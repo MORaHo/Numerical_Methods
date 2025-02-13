@@ -17,7 +17,7 @@ def inv(M:Matrix):
         sys.exit()
 
     A = copy(M)
-    I = eye(len(M),len(M[0]))
+    I = eye(len(M))
 
     for j in range(len(A)):
         A[j] = A[j] + I[j]

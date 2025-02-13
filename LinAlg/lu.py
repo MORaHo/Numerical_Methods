@@ -17,8 +17,8 @@ def LU_decomposition(A:Matrix):
         print("Matrix is not square")
         sys.exit()
 
-    L = zeros(len(U),len(U[0]))
-    P = eye(len(U),len(U[0]))
+    L = zeros(len(U),len(U))
+    P = eye(len(U))
 
     for k in range(len(U)-1):
         largest_value = U[k][k]

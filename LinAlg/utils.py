@@ -5,8 +5,8 @@ import sys
 Matrix = matrix.Matrix
 numbers = Union[int,float,complex]
 
-def eye(m:int,n:int=1):
-    I = [ [ 1 if i == j else 0 for j in range(m) ] for i in range(n) ]
+def eye(n:int):
+    I = [ [ 1 if i == j else 0 for j in range(n) ] for i in range(n) ]
     return Matrix(I)
 
 def ones(m:int,n:int=1):

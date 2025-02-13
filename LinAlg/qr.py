@@ -31,15 +31,15 @@ def house_qr(A:Matrix):
     
     t = (m-1)*(m-1<=n) + (n)*(n<m-1)
     A_k = copy(A)
-    Q = eye(m,m)
+    Q = eye(m)
     for k in range(t):
         v = get_column(A_k,0)
         alfa = norm(v)
         v[0][0] += alfa*(v[k][0]/abs(v[k][0]))
         c = 2/(v.T()*v)
-        Q_k = eye(m-k,m-k)-v*v.T()*c # for now just T not H
+        Q_k = eye(m-k)-v*v.T()*c # for now just T not H
         if k:
-            I = eye(m,m)
+            I = eye(m)
             for i in range(m-k):
                 for j in range(n-k):
                     I[i+k][j+k] = Q_k[i][j]

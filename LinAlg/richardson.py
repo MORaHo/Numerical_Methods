@@ -25,7 +25,7 @@ def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
 
     n = len(b)
 
-    B = eye(n,n) - (inv(P) * A) * alpha
+    B = eye(n) - (inv(P) * A) * alpha
     if abs(power(B)[0]) > 1:
         print("System will not converge")
         sys.exit()
@@ -50,3 +50,4 @@ def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
 
     print("Converged in",k,"iterations.")
     return [x,k]
+
