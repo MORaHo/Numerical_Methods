@@ -27,6 +27,6 @@ def eig(A:Matrix):
     
     lambdas = [ A_k[i][i] for i in range(len(A_k))] #vector of eigenvalues to be exported on the principal diagonal of the A_k matrix
 
-    return diag(Matrix(lambdas))
+    return Vector(lambdas)
 
 eigen = eig
