@@ -1,8 +1,7 @@
-import matrix
+from matrix import ndarray,Matrix,Vector
 from typing import Union
 import sys
 
-Matrix = matrix.Matrix
 numbers = Union[int,float,complex]
 
 def eye(n:int):
@@ -17,11 +16,11 @@ def zeros(m:int,n:int=1):
     Z = [ [ 0 for _ in range(n) ] for _ in range(m) ]
     return Matrix(Z)
 
-def copy(A:Matrix):
+def copy(A:ndarray):
     N = [[ A[j][i] for i in range(len(A[0]))] for j in range(len(A))]
     return Matrix(N)
 
-def diag(A:Matrix,offset_:int=0):
+def diag(A:ndarray,offset_:int=0):
 
     if len(A) == 1 or len(A[0]) == 1: # matrix is a vector so we create a matrix
 
@@ -59,13 +58,13 @@ def diag(A:Matrix,offset_:int=0):
                 if i-shift_x*offset_ == j+shift_y*offset_: #it needs to be added to j since it positive
                     B.append([A[j][i]])
         
-        return Matrix(B)
+        return Vector(B)
 
     else:
         print("Matrix is not vector or square matrix")
         sys.exit()
 
-def tril(A:Matrix):
+def tril(A:ndarray):
     n = len(A)
     m = len(A[0])
     M = zeros(n,m)
@@ -80,3 +79,10 @@ def linspace(a, b, n:int=100):
         return b
     diff = (float(b) - a)/(n - 1)
     return [a + diff*i  for i in range(n)]
+
+def ndabs(A:ndarray): #absolute value for ndarrays
+    M = copy(A)
+    for j in range(len(M)):
+        for i in range(len(M[0])):
+            M[j][i] = abs(M[j][i])
+    return M
