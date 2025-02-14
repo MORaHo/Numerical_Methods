@@ -1,58 +1,41 @@
-### This is the base for all the calculations that I intend to do within numerical methods
 from typing import Union
 import sys
 
-# union type of all number types
-numbers = Union[int,float,complex]
+numbers  = Union[int,float,complex]
 
-class Matrix():
-    "A matrix class for use in working with numerical methods"
-    
-    def __init__(self,data,rows:int=0,columns:int=1):
-        
+class ndarray():
+
+    def __init__(self,data,rows:int,columns:int):
+
+        if type(data[0])==list:
+            data_size = len(data)*len(data[0])
+        else: 
+            data_size = len(data)
+
+        if data_size != rows*columns:
+            print("Data doesn't fit in the size parameters.")
+            sys.exit()
 
         if type(data) == list and type(data[0]) == list: #if the input data is a matrix
             self.matrix = data
-            self.rows = len(data)
-            self.columns = len(data[0])
-
-        elif rows == 0: #create column vector
-            
-            self.rows = len(data)
-            self.columns = columns
-            self.matrix = [ [ data[i] ] for i in range(self.rows) ]
-
-        elif len(data) != rows*columns: #data does not fit within the given size parameters
-            print("Data doesn't fit in the matrix")
-            sys.exit()
-
-        else: #make matrix to assigned parameters
-            self.rows = rows
-            self.columns = columns
+        else:
             if rows <= columns:
-                self.matrix = [ [ data[i*self.rows+j] for j in range(self.columns) ] for i in range(self.rows) ]
+                self.matrix = [ [data[i*rows+j] for j in range(columns) ] for i in range(rows) ]
             elif rows > columns:
-                self.matrix = [ [ data[j+i*self.columns] for j in range(self.columns) ] for i in range(self.rows) ]
+                self.matrix = [ [data[j+i*columns] for j in range(columns) ] for i in range(rows) ]
+    
+    def T(self): #returns matrix transpose
 
-    def __getitem__(self,index):
+        M = self.matrix
+        T = [ [ M[j][i] for j in range(len(M)) ] for i in range(len(M[0])) ]
+        return Matrix(T,len(T),len(T[0]))
 
-        
-        if type(index)==int:
-            return self.matrix[index]
+    def H(self): #complex conjugate equivalent of the tranpose
 
-        elif type(index)==slice:
-            return self.matrix[index]
-
-        elif type(index)==tuple and len(index)==2:
-            y,x = index
-            return self.matrix[y][x]
-
-    def __setitem__(self,i,item):
-        self.matrix[i] = item
-
-    def __len__(self):
-        return len(self.matrix)
-
+        M = self.matrix
+        H = [ [ conj(M[j][i]) if type(M[j][i]) == complex else M[j][i] for j in range(len(M)) ] for i in range(len(M[0])) ]
+        return Matrix(H,len(H),len(H[0]))
+    
     def __str__(self):
         """Prints matrix in Matlab style, although the variable name is not printed"""
         string = "\n"
@@ -65,45 +48,78 @@ class Matrix():
                 string += "  "
             string += ("\n" + (j<len(self.matrix)-1)*"\n")
         return string
+    
+    def __len__(self):
+        return len(self.matrix)
+    
+    def __getitem__(self,index):
 
+        
+        if type(index)==int:
+            return self.matrix[index]
 
+        elif type(index)==slice:
+            return self.matrix[index]
+
+        elif type(index)==tuple and len(index)==2:
+            y,x = index
+            return self.matrix[y][x]
+        
+    def __setitem__(self,i,item):
+        self.matrix[i] = item  
+        
     def __add__(self,B): # addition
 
-        A = self.matrix
-        if len(A) == len(B) and len(A[0]) == len(B[0]):
-            C = [ [ A[i][j]+B[i][j] for j in range(len(B[0])) ] for i in range(len(B)) ]
+        M = self.matrix
+        if type(self) == type(B) and len(M) == len(B) and len(M[0]) == len(B[0]):
+            C = [ [ M[i][j]+B[i][j] for j in range(len(B[0])) ] for i in range(len(B)) ]
             return Matrix(C)
         else:
-            print("Matrix dimensions don't match")
+            print("Matrix dimensions or types don't match")
             sys.exit()
+
+    def __sub__(self,s): #subdivision
+
+        M = self.matrix
+        S = [ [ 0 for _ in range(len(M[0])) ] for _ in range(len(M)) ]
+
+        if type(self) != type(s) or len(M) != len(s) or len(M[0]) != len(M[0]):
+            print("Matrix dimensions or types do not match")
+            sys.exit()          
+        else:
+            for i in range(len(M)):
+                for j in range(len(M[0])):
+                    S[i][j] = M[i][j] - s[i][j]
+            
+            return Matrix(S)
 
     def __mul__(self,B): # element-wise scalar multiplication and dot product
 
-        A = self.matrix
+        M = self.matrix
 
         if type(B) in numbers.__args__: #allows element wise moltiplication by scalar with the matrix
 
-            A = self.matrix
-            Z = [[ 0 for _ in range(len(A[0]))] for _ in range(len(A))]
-            for j in range(len(A)):
-                for i in range(len(A[0])):
-                    Z[j][i] = B*A[j][i]
+            M = self.matrix
+            Z = [[ 0 for _ in range(len(M[0]))] for _ in range(len(M))]
+            for j in range(len(M)):
+                for i in range(len(M[0])):
+                    Z[j][i] = B*M[j][i]
             
             return Matrix(Z)
 
-        elif len(A[0]) != len(B): #if the dimensions don't match the dotproduct cannot be performed
+        elif len(M[0]) != len(B): #if the dimensions don't match the dotproduct cannot be performed
             print("Dimensions of the two matrices don't match")
             sys.exit()
 
-        Z = [[ 0 for _ in range(len(B[0]))] for _ in range(len(A))] 
-        n = len(A[0])
+        Z = [[ 0 for _ in range(len(B[0]))] for _ in range(len(M))] 
+        n = len(M[0])
         
         #dot-product
         for i in range(len(B[0])):
-            for j in range(len(A)):
+            for j in range(len(M)):
                 sum = 0
                 for k in range(n):
-                    sum += A[j][k] * B[k][i]
+                    sum += M[j][k] * B[k][i]
                 Z[j][i] = sum
         
         if len(Z) == 1 and len(Z[0]) == 1:
@@ -112,61 +128,57 @@ class Matrix():
             return Matrix(Z)
 
     def __truediv__(self,s): #element-wise division
-        A = self.matrix
-        S = [[A[j][i]/s  for i in range(len(A[0])) ] for j in range(len(A))]
+        M = self.matrix
+        S = [[M[j][i]/s  for i in range(len(M[0])) ] for j in range(len(M))]
         return Matrix(S)
 
-    def __sub__(self,s): #subdivision
+class Matrix(ndarray):
 
-        A = self.matrix
-        S = [ [ 0 for _ in range(len(A[0])) ] for _ in range(len(A)) ]
-
-        if len(A) != len(s) or len(A[0]) != len(s[0]):
-            print("Matrix dimensions do not match")
-            sys.exit()          
+    def __new__(cls,data,rows:int=0,columns:int=0):
+        if rows < 2 or columns < 2:
+            if len(data) == 1: #it's a row
+                return Vector(data,is_row = 1)
+            try:
+                if len(data[0]) == 1:
+                    return Vector(data)
+                else:
+                    return super(Matrix, cls).__new__(cls)
+            except:
+                return Vector(data,is_row=1)
         else:
-            for i in range(len(A)):
-                for j in range(len(A[0])):
-                    S[i][j] = A[i][j] - s[i][j]
-            
-            return Matrix(S)
+            return super(Matrix, cls).__new__(cls)
 
-    def reshape(self,rows:int,columns:int): #allows the dimensioning of a matrix is needed
+    def __init__(self,data,rows:int=0,columns:int=0):
 
-        if rows*columns != self.columns*self.rows:
-            print("Requested reshape does not match matrix size")
-            sys.exit()
+        rows = rows*(rows!=0)+len(data)*(rows==0)
+        columns = columns*(columns!=0)+len(data[0])*(columns==0)
+        super().__init__(data=data,rows = rows,columns = columns)
+
+class Vector(ndarray):
+
+    def __init__(self,data,is_row:int=0):
+        if is_row and type(data[0]) != list:
+            super().__init__(data,1,len(data))
+        elif len(data) == 1:
+            super().__init__(data,1,len(data[0]))
         else:
-            flat = []
-            for i in range(self.rows):
-                for j in range(self.columns):
-                    flat.append(self.matrix[i][j])
-            self.matrix = [ [ flat[i*columns+j] for j in range(columns) ] for i in range(rows) ]
-            self.rows = rows
-            self.columns = columns
-
-    def T(self): #returns matrix transpose
-
-        A = self.matrix
-        T = [ [ A[j][i] for j in range(len(A)) ] for i in range(len(A[0])) ]
-        return Matrix(T)
-    
-    def H(self): #complex conjugate equivalent of the tranpose
-
-        A = self.matrix
-        H = [ [ conj(A[j][i]) if type(A[j][i]) == complex else A[j][i] for j in range(len(A)) ] for i in range(len(A[0])) ]
-        return Matrix(H)
+            super().__init__(data,len(data),1)
 
     def col(self): #function to make vectors columns
 
         x = self.matrix
-        if len(x) != 1 and len(x[0]) != 1: #it's a matrix not a vector
-            print("Cannot take the column of a matrix, function requires vector (matrix with dimension 1 on any side)")
-            sys.exit()
-        elif len(x) == 1: #matrix is row vector, need to return row vector
-            return Matrix(self.T())
+        if len(x) == 1: #matrix is row vector, need to return row vector
+            return self.T()
         elif len(x[0]) == 1: #it's a column vector, no change is needed
-            return Matrix(x)
+            return self   
+
+    def row(self): #function to make vectors columns
+
+        x = self.matrix
+        if len(x[0]) == 1: #matrix is row vector, need to return row vector
+            return self.T()
+        elif len(x) == 1: #it's a column vector, no change is needed
+            return self
 
 def conj(integer:numbers):
     return complex(integer.real,-1*integer.imag)
