@@ -2,7 +2,7 @@ from matrix import Matrix
 import sys
 from norm import norm
 from solve import solve
-from utils import diag,eye,tril,ones,zeros
+from utils import eye
 from inv import inv
 from power import power
 
