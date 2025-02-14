@@ -49,7 +49,7 @@ def LU_decomposition(A:Matrix):
                 U[j][c] -= l_jk*U[k][c]
             L[j][k] = l_jk
 
-    L += eye(len(L),len(L[0]))  
+    L += eye(len(L))  
     
     return [L,U,P]
 
