@@ -1,7 +1,6 @@
 import sys
-import matrix
+from matrix import Matrix,Vector
 from norm import norm
-Matrix = matrix.Matrix
 from utils import zeros,eye,copy
 
 def get_column(A:Matrix,i:int):
@@ -9,7 +8,7 @@ def get_column(A:Matrix,i:int):
     a_i = []
     for n in range(len(A)):
         a_i.append(A[n][i])
-    return Matrix(a_i)
+    return Vector(a_i)
 
 def minor(A:Matrix,offset_:int):
     Z = zeros(len(A)-offset_,len(A[0])-offset_)
