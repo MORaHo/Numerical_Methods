@@ -2,7 +2,7 @@ from matrix import Matrix
 import sys
 from norm import norm
 from solve import solve
-from utils import ones,zeros,diag,eye,tril
+from utils import diag,eye,tril,ones,zeros
 from inv import inv
 from power import power
 
@@ -50,4 +50,3 @@ def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
 
     print("Converged in",k,"iterations.")
     return [x,k]
-
