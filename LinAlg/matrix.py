@@ -126,6 +126,9 @@ class ndarray():
             return Z[0][0]
         else:
             return Matrix(Z)
+        
+    def __rmul__(self,m):
+        return self.__mul__(m)
 
     def __truediv__(self,s): #element-wise division
         M = self.matrix
