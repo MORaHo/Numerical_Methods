@@ -36,7 +36,7 @@ def house_qr(A:Matrix):
         alfa = norm(v)
         v[0][0] += alfa*(v[k][0]/abs(v[k][0]))
         c = 2/(v.T()*v)
-        Q_k = eye(m-k)-v*v.T()*c # for now just T not H
+        Q_k = eye(m-k)-v*v.H()*c # for now just T not H
         if k:
             I = eye(m)
             for i in range(m-k):
