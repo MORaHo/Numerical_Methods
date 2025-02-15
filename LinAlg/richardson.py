@@ -30,7 +30,7 @@ def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
         print("System will not converge")
         sys.exit()
 
-    if len(A) != n or len(A[0]) != n or len(x0) != 0:
+    if len(A) != n or len(A[0]) != n or len(x0) != n:
         print("Imcompatible dimensions of parameters")
         sys.exit()
 
