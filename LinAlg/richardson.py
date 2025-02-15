@@ -25,25 +25,25 @@ def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
 
     n = len(b)
 
-    B = eye(n) - (inv(P) * A) * alpha
+    B = eye(n) - alpha * (inv(P) * A)
     if abs(power(B)[0]) > 1:
         print("System will not converge")
         sys.exit()
 
-    #if len(A) != n or len(A[0]) != n or len(x0) != 0:
-    #    print("Imcompatible dimensions of parameters")
-    #    sys.exit()
+    if len(A) != n or len(A[0]) != n or len(x0) != 0:
+        print("Imcompatible dimensions of parameters")
+        sys.exit()
 
     x = x0
-    k = 0;
+    k = 0
     r = b - A*x
     normalized_res = norm(r) / norm(b)
 
     while normalized_res > tol and k<nmax:
 
         z = solve(P,r)
-        x = x + z * alpha
-        r = r - (A*z)*alpha
+        x = x + alpha * z
+        r = r - alpha*(A*z)
         normalized_res = norm(r)/norm(b)
         k = k + 1
 
