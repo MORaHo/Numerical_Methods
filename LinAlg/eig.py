@@ -8,10 +8,12 @@ nmax = 250 #maximum number of iterations
 def eig(A:Matrix):
     
     A_k = A
-    k = 0  
+    k = 0 
+    Q = 1
     while k < nmax: #I don't know what the end loop conditions are so currently it's only limited by the numbers of iterations
 
         [Q_k,R_k] = qr(A_k)
+        Q *= Q_k
         A_k = R_k*Q_k #iteration of A_k to make it into a upper triangular matrix with the eigen values on the primary diagonal
         p = diag(A_k)
         pp1 = ndabs(Vector(p[1:len(p)]))

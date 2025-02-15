@@ -12,7 +12,7 @@ Matrix = matrix.Matrix
 
 def inv(M:Matrix):
 
-    if len(M) != len(M[0]) or det(M) == 0:
+    if len(M) != len(M[0]) or det(M) < 2E-18:
         print("Matrix is not invertible")
         sys.exit()
 
