@@ -170,7 +170,7 @@ class Vector(ndarray):
     def col(self): #function to make vectors columns
 
         x = self.matrix
-        if len(x) == 1: #matrix is row vector, need to return row vector
+        if len(x) == 1: #matrix is row vector, need to return column vector
             return self.T()
         elif len(x[0]) == 1: #it's a column vector, no change is needed
             return self   
@@ -178,9 +178,9 @@ class Vector(ndarray):
     def row(self): #function to make vectors columns
 
         x = self.matrix
-        if len(x[0]) == 1: #matrix is row vector, need to return row vector
+        if len(x[0]) == 1: #matrix is column vector, need to return row vector
             return self.T()
-        elif len(x) == 1: #it's a column vector, no change is needed
+        elif len(x) == 1: #it's a row vector, no change is needed
             return self
 
 def conj(integer:numbers):
