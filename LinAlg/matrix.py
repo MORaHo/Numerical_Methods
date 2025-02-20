@@ -134,6 +134,9 @@ class ndarray():
         M = self.matrix
         S = [[M[j][i]/s  for i in range(len(M[0])) ] for j in range(len(M))]
         return Matrix(S)
+    
+    def size(self):
+        return [len(self.matrix),len(self.matrix[0])]
 
 class Matrix(ndarray):
 
