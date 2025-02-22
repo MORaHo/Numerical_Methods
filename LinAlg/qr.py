@@ -3,24 +3,30 @@ from matrix import Matrix,Vector
 from norm import norm
 from utils import zeros,eye,copy
 
+
 def get_column(A:Matrix,i:int):
-    
+    [Arows,_] = A.size()
     a_i = []
-    for n in range(len(A)):
+    for n in range(Arows):
         a_i.append(A[n][i])
     return Vector(a_i)
 
 def minor(A:Matrix,offset_:int):
-    Z = zeros(len(A)-offset_,len(A[0])-offset_)
-    for m in range(len(Z)):
-        for n in range(len(Z[0])):
+
+    [Arows,Acols] = A.size()
+    Zrows = Arows-offset_
+    Zcols = Acols-offset_
+    Z = zeros(Zrows,Zcols)
+
+    for m in range(Zrows):
+        for n in range(Zcols):
             Z[m][n] = A[m+offset_][n+offset_]
 
     return Z
 
 def house_qr(A:Matrix):
-    m = len(A)
-    n = len(A[0])
+
+    [m,n] = A.size() # m = Arows and n = Acols, to avoid rewriting a lot
     if m != n:
         print("Currently unable to decompose non-square matrices")
         sys.exit()

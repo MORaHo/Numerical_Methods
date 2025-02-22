@@ -12,19 +12,20 @@ def LU_decomposition(A:Matrix):
 
     #global U
     U = copy(A)
+    [Urows,Ucols] = U.size()
 
-    if len(U) != len(U[0]): # if the matrix is not square it will not work
+    if Urows != Ucols: # if the matrix is not square it will not work
         print("Matrix is not square")
         sys.exit()
 
-    L = zeros(len(U),len(U))
-    P = eye(len(U))
+    L = zeros(Urows,Ucols)
+    P = eye(Urows)
 
-    for k in range(len(U)-1):
+    for k in range(Urows-1):
         largest_value = U[k][k]
         row = k
         
-        for i in range(k,len(U)): #check the with the largest number on the k-th column so we can pivot and reduce the error, also permit some matrices that wouldn't otherwise be able to be decomposed eventhough the fit the requirements to be decomposed.
+        for i in range(k,Urows): #check the with the largest number on the k-th column so we can pivot and reduce the error, also permit some matrices that wouldn't otherwise be able to be decomposed eventhough the fit the requirements to be decomposed.
 
             if abs(U[i][k]) > abs(largest_value):
                 largest_value = U[i][k]
@@ -42,10 +43,10 @@ def LU_decomposition(A:Matrix):
             L[row] = temp
 
         A_kk = U[k][k]
-        for j in range(k+1,len(U)): # MEG and generating L matrix
+        for j in range(k+1,Urows): # MEG and generating L matrix
             
             l_jk = U[j][k]/A_kk
-            for c in range(0,len(U[0])):
+            for c in range(0,Ucols):
                 U[j][c] -= l_jk*U[k][c]
             L[j][k] = l_jk
 

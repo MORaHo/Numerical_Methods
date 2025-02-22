@@ -1,4 +1,5 @@
 from matrix import Matrix
+from utils import ones
 from norm import norm
 from inv import inv
 
@@ -7,8 +8,9 @@ nmax = 250 #maximum number of iterations
 
 def maxeig(A:Matrix):
     ## Implementation of the power method, used to find the largest eigenvalue
-
-    x = Matrix([ [1] for _ in range(len(A)) ]) # initial guess
+    
+    [Arows,_] = A.size()
+    x = ones(Arows) # initial guess
     y = x/norm(x,3)
     iter = 0
     rel_err = 1

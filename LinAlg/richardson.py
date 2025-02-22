@@ -24,13 +24,15 @@ def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
     # k: number of iterations
 
     n = len(b)
+    [Arows,Acols] = A.size()
 
     B = eye(n) - alpha * (inv(P) * A)
     if abs(power(B)[0]) > 1:
         print("System will not converge")
         sys.exit()
 
-    if len(A) != n or len(A[0]) != n or len(x0) != n:
+
+    if Arows != n or Acols != n or len(x0) != n:
         print("Imcompatible dimensions of parameters")
         sys.exit()
 

@@ -8,7 +8,9 @@ def cond(A:Matrix):
 
     M1 = A*A.T()
     M2 = A.T()*A
-    if len(M1)*len(M1[0]) > len(M2)*len(M2[0]):
+    [M1rows,M1cols] = M1.size()
+    [M2rows,M2cols] = M2.size()
+    if M1rows*M1cols > M2rows*M2cols:
         M = A.T()*A
     else:
         M = A*A.T()

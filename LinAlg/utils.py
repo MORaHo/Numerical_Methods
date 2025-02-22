@@ -17,21 +17,24 @@ def zeros(m:int,n:int=1):
     return Matrix(Z)
 
 def copy(A:ndarray):
-    N = [[ A[j][i] for i in range(len(A[0]))] for j in range(len(A))]
+    [Arows,Acols] = A.size()
+    N = [[ A[j][i] for i in range(Arows)] for j in range(Acols)]
     return Matrix(N)
 
 def diag(A:ndarray,offset_:int=0):
 
-    if len(A) == 1 or len(A[0]) == 1: # matrix is a vector so we create a matrix
+    [Arows,Acols] = A.size()
+
+    if Arows == 1 or Acols == 1: # matrix is a vector so we create a matrix
 
         shift_y = (offset_ < 0)
         shift_x = (offset_ > 0)
         zero_case = (offset_ == 0) #without this there would need to be a if statement to handle the case where offset_ = 0
 
-        column = (len(A)>1) #allows use to handle both column and row vectors
-        row = (len(A[0])>1)
+        column = (Arows>1) #allows use to handle both column and row vectors
+        row = (Acols>1)
 
-        dim = len(A)*(len(A)>1) + len(A[0])*(len(A[0])>1) + abs(offset_)
+        dim = Arows*(Arows>1) + Acols*(Acols>1) + abs(offset_)
         B = zeros(dim,dim)
 
         for i in range(dim):
@@ -46,15 +49,15 @@ def diag(A:ndarray,offset_:int=0):
         return B
                     
 
-    elif len(A) == len(A[0]): # matrix is a matrix so we create a vector
+    elif Arows == Acols: # matrix is a matrix so we create a vector
 
         shift_y = (offset_ < 0) #one of the two shifts will be true, if offset_ is non-zero
         shift_x = (offset_ > 0)
         B = []
         
         # I tried to use list comprehension, but it didn't seem to work
-        for i in range(len(A)):
-            for j in range(len(A[0])):
+        for i in range(Arows):
+            for j in range(Acols):
                 if i-shift_x*offset_ == j+shift_y*offset_: #it needs to be added to j since it positive
                     B.append([A[j][i]])
         
@@ -65,8 +68,7 @@ def diag(A:ndarray,offset_:int=0):
         sys.exit()
 
 def tril(A:ndarray):
-    n = len(A)
-    m = len(A[0])
+    n,m = A.size() # m = Arows and n = Acols, to avoid rewriting a lot
     M = zeros(n,m)
     for i in range(n):
         for j in range(m):
@@ -82,7 +84,8 @@ def linspace(a, b, n:int=100):
 
 def ndabs(A:ndarray): #absolute value for ndarrays
     M = copy(A)
-    for j in range(len(M)):
-        for i in range(len(M[0])):
+    [Mrows,Mcols] = M.size()
+    for j in range(Mrows):
+        for i in range(Mcols):
             M[j][i] = abs(M[j][i])
     return M
