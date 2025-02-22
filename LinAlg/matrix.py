@@ -157,7 +157,10 @@ class Matrix(ndarray):
     def __init__(self,data,rows:int=0,columns:int=0):
 
         rows = rows*(rows!=0)+len(data)*(rows==0)
-        columns = columns*(columns!=0)+len(data[0])*(columns==0)
+        try:
+            columns = columns*(columns!=0)+len(data[0])*(columns==0)
+        except:
+            columns = columns
         super().__init__(data=data,rows = rows,columns = columns)
 
 class Vector(ndarray):
