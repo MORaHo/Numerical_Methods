@@ -16,13 +16,11 @@ class ndarray():
             print("Data doesn't fit in the size parameters.")
             sys.exit()
 
-        if type(data) == list and type(data[0]) == list: #if the input data is a matrix
+        if type(data) == list and type(data[0]) == list: #if the input data is already a 2d array
             self.matrix = data
         else:
-            if rows <= columns:
-                self.matrix = [ [data[i*rows+j] for j in range(columns) ] for i in range(rows) ]
-            elif rows > columns:
-                self.matrix = [ [data[j+i*columns] for j in range(columns) ] for i in range(rows) ]
+            self.matrix = [ data[ r*columns:r*columns+columns ] for r in range(rows) ]
+
     
     def T(self): #returns matrix transpose
 
