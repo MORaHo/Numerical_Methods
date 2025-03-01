@@ -1,9 +1,6 @@
-import os
-import sys
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.dirname(SCRIPT_DIR))
+import init
 from math import sqrt as sq
-from LinAlg.matrix import ndarray,Vector
+from LinAlg.matrix import ndarray
 
 def sqrt(x:ndarray):
     for j in range(len(x)):
