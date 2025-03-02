@@ -132,6 +132,26 @@ class ndarray():
         M = self.matrix
         S = [[M[j][i]/s  for i in range(len(M[0])) ] for j in range(len(M))]
         return Matrix(S)
+
+    def __pow__(self,b):
+        
+        if type(b) == int or type(b) == float:
+            I = []
+            [rows,cols] = self.size()
+            for j in range(rows):
+                for i in range(cols):
+                    I.append(self.matrix[j][i] ** b)
+            return Matrix(I,rows,cols)
+        elif isinstance(b,ndarray):
+            if self.size() != b.size():
+                print("Dimensions do not match for element-wise multiplication")
+                sys.exit()
+            [rows,cols] = self.size()
+            P = []
+            for j in range(rows):
+                for i in range(cols):
+                    P.append(self.matrix[j][i] * b[j][i])
+            return Matrix(P,rows,cols)
     
     def size(self):
         return [len(self.matrix),len(self.matrix[0])]
