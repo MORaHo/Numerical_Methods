@@ -142,6 +142,8 @@ class ndarray():
                 for i in range(cols):
                     I.append(self.matrix[j][i] ** b)
             return Matrix(I,rows,cols)
+        
+        # matmul didn't work for some reason I just chose to repurpose the power operator to permit element-wise matrix multiplication
         elif isinstance(b,ndarray):
             if self.size() != b.size():
                 print("Dimensions do not match for element-wise multiplication")
