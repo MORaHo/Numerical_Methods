@@ -1,4 +1,4 @@
-from matrix import Matrix
+from matrix import Matrix,Vector
 import sys
 from norm import norm
 from solve import solve
@@ -6,7 +6,7 @@ from utils import eye
 from inv import inv
 from power import power
 
-def richardson(A:Matrix,b:Matrix,P:Matrix,x0:Matrix,tol,nmax:int,alpha):
+def richardson(A:Matrix,b:Vector,P:Matrix,x0:Vector,tol,nmax:int,alpha):
 
     ## Input Arguements:
     #
