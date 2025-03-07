@@ -1,9 +1,11 @@
 import init
 from math import exp as exponential
-from LinAlg.matrix import ndarray
+from LinAlg.matrix import ndarray,Vector,Matrix
 
 def exp(x:ndarray):
+    [rows,cols] = x.size()
+    M = []
     for j in range(len(x)):
         for i in range(len(x[0])):
-            x[j][i] = exponential(x[j][i])
-    return x
+            M.append(exponential(x[j][i]))
+    return Matrix(M,rows,cols)
