@@ -162,15 +162,16 @@ class Matrix(ndarray):
 
     def __new__(cls,data,rows:int=0,columns:int=0):
         if rows < 2 or columns < 2:
-            if len(data) == 1: #it's a row
+            if columns == 0 and len(data) == 1: #it's a row
                 return Vector(data,is_row = 1)
             try:
-                if len(data[0]) == 1:
+                if len(data[0]) != 1:
                     return Vector(data)
                 else:
                     return super(Matrix, cls).__new__(cls)
             except:
-                return Vector(data,is_row=1)
+                return Vector(data)
+
         else:
             return super(Matrix, cls).__new__(cls)
 
