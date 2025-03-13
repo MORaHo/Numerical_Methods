@@ -1,4 +1,5 @@
 import init
+from math import sqrt as sqroot
 from LinAlg.matrix import ndarray,Matrix
 
 def sqrt(x:ndarray):
@@ -6,5 +7,5 @@ def sqrt(x:ndarray):
     M = []
     for j in range(len(x)):
         for i in range(len(x[0])):
-            M.append((x[j][i])**(1/2))
+            M.append((sqroot(x[j][i])))
     return Matrix(M,rows,cols)
