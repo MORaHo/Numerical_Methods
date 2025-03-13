@@ -1,8 +1,10 @@
 import init
-from LinAlg.matrix import ndarray
+from LinAlg.matrix import ndarray,Matrix
 
 def root(x:ndarray,n:int):
+    [rows,cols] = x.size()
+    M = []
     for j in range(len(x)):
         for i in range(len(x[0])):
-            x[j][i] = x[j][i]**(1/n)
-    return x
+            M.append((x[j][i])**(1/n))
+    return Matrix(M,rows,cols)

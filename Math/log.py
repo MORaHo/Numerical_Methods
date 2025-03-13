@@ -1,6 +1,6 @@
 import init
 from math import log as logarithm
-from LinAlg.matrix import ndarray
+from LinAlg.matrix import ndarray,Matrix
 
 def ln(x,base):
     return logarithm(x)
@@ -13,8 +13,11 @@ def log(x:ndarray,base:int=0):
         logarithm = logwithbase
     else:
         logarithm = ln
+    
+    [rows,cols] = x.size()
+    M = []
     for j in range(len(x)):
         for i in range(len(x[0])):
             if base != 0:
-                x[j][i] = logarithm(x[j][i],base)
-    return x
+                M.append(logarithm(x[j][i],base))
+    return Matrix(M,rows,cols)
