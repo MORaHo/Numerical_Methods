@@ -1,9 +1,7 @@
 import init
-import matplotlib.pyplot as mtpl
 from Misc.linspace import linspace
-from LinAlg.utils import zeros
 from LinAlg.matrix import Vector
-from Math.cos import cos
+
 def fixed_point(x0,f,nmax:int,toll:int,a,b):
     
     """
@@ -45,11 +43,3 @@ def fixed_point(x0,f,nmax:int,toll:int,a,b):
 
     return [Vector(succ),it]
 
-f = lambda x: cos(x)
-x0 = 0
-nmax = 1000
-a = 0
-b = 3
-toll = 1e-6
-
-fixed_point(x0,f,nmax,toll,a,b)
