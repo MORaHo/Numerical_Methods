@@ -1,7 +1,8 @@
 import sys
-from matrix import Matrix,Vector
-from norm import norm
-from utils import zeros,eye,copy
+import init
+from LinAlg.matrix import Matrix,Vector
+from LinAlg.norm import norm
+from LinAlg.utils import zeros,eye,copy
 
 
 def get_column(A:Matrix,i:int):

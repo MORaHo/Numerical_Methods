@@ -1,6 +1,7 @@
-from matrix import Matrix
+import init
+from LinAlg.matrix import Matrix
 from math import sqrt
-from power import power,inv_power
+from LinAlg.power import power,inv_power
 
 ### This function is subject to possible change
 

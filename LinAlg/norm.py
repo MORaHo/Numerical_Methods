@@ -1,8 +1,8 @@
-import matrix
+import init
+from LinAlg.matrix import Matrix
 from typing import Union
-Matrix = matrix.Matrix
 numbers = Union[int,float,complex]
-from utils import copy
+from LinAlg.utils import copy
 from math import sqrt
 
 def norm(M:Matrix,type_ = 3) -> numbers: #this will be changes to 2 when the spectral norm is implemented

@@ -164,7 +164,7 @@ class Matrix(ndarray):
         if rows < 2 or columns < 2:
             if columns == 0 and len(data) == 1: #it's a row
                 return Vector(data,is_row = 1)
-            elif type(data[0]) == int:
+            elif type(data[0]) == int or type(data[0]) == float or type(data[0]) == complex:
                 return Vector(data)
             elif len(data[0]) != 1:
                 return Vector(data)

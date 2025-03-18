@@ -1,8 +1,8 @@
-import matrix
-from vand import vand
-from lu import lu
-Matrix = matrix.Matrix
-from utils import zeros
+import init
+from LinAlg.matrix import Matrix,Vector
+from LinAlg.vand import vand
+from LinAlg.lu import lu
+from LinAlg.utils import zeros
 
 def forward_substitution(L:Matrix,b:Matrix):
     
@@ -37,11 +37,11 @@ def backward_substitution(U:Matrix,y:Matrix):
 
 bkw_sub = backward_substitution
 
-def solve(A:Matrix,b:Matrix):
+def solve(A:Matrix,b:Vector):
     
     #this will be expanded to handle more and more cases, initially I intend to add a QR solver and for this function to basically become the \ of matlab
     [L,U,_] = lu(A)
-    y = forward_substitution(L,b)
+    y = forward_substitution(L,b.col())
     x = backward_substitution(U,y)
 
     return x

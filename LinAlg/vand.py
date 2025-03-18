@@ -1,15 +1,11 @@
-import matrix
+
 import sys
+import init
+from LinAlg.matrix import Matrix,Vector
 
-Matrix = matrix.Matrix
-
-def vandermonde(x:Matrix,n:int):
+def vandermonde(x:Vector,n:int):
     
     V = []
-    if not( len(x) == 1 or len(x[0]) == 1 ): #checking if x is a vectors
-        print("Object is not a vector")
-        sys.exit()
-    
     x = x.col() #making sure it's a column vector
 
     for m in range(len(x)):

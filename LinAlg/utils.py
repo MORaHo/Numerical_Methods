@@ -1,6 +1,7 @@
-from matrix import ndarray,Matrix,Vector
-from typing import Union
 import sys
+import init
+from typing import Union
+from LinAlg.matrix import ndarray,Matrix,Vector
 
 numbers = Union[int,float,complex]
 
@@ -49,7 +50,7 @@ def diag(A:ndarray,offset_:int=0):
         return B
                     
 
-    elif Arows == Acols: # matrix is a matrix so we create a vector
+    elif Arows == Acols: # matrix is a square matrix so we create a vector
 
         shift_y = (offset_ < 0) #one of the two shifts will be true, if offset_ is non-zero
         shift_x = (offset_ > 0)

@@ -1,6 +1,6 @@
-import matrix
-from utils import copy
-Matrix = matrix.Matrix
+import init
+from LinAlg.matrix import Matrix
+from LinAlg.utils import copy
 
 def gaussian_elimination(A:Matrix):
     

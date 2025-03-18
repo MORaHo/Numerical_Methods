@@ -1,8 +1,7 @@
-import matrix
-from utils import eye,zeros,copy
+import init
+from LinAlg.matrix import Matrix
+from LinAlg.utils import eye,zeros,copy
 import sys
-
-Matrix = matrix.Matrix
 
 def LU_decomposition(A:Matrix):
     

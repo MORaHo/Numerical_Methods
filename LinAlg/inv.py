@@ -1,9 +1,9 @@
-import matrix
-from det import det
-from utils import copy,eye
+import init
+from LinAlg.matrix import Matrix
+from LinAlg.det import det
+from LinAlg.utils import copy,eye
 import sys
 
-Matrix = matrix.Matrix
 
 ############################################
 # This function utilizes Gauss-Jordan      #

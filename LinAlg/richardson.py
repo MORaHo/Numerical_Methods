@@ -1,10 +1,11 @@
-from matrix import Matrix,Vector
 import sys
-from norm import norm
-from solve import solve
-from utils import eye
-from inv import inv
-from power import power
+import init
+from LinAlg.matrix import Matrix,Vector
+from LinAlg.norm import norm
+from LinAlg.solve import solve
+from LinAlg.utils import eye
+from LinAlg.inv import inv
+from LinAlg.power import power
 
 def richardson(A:Matrix,b:Vector,P:Matrix,x0:Vector,tol,nmax:int,alpha):
 

@@ -1,6 +1,7 @@
-from matrix import Matrix,Vector
-from utils import diag,ndabs
-from qr import qr
+import init
+from LinAlg.matrix import Matrix,Vector
+from LinAlg.utils import diag,ndabs
+from LinAlg.qr import qr
 
 toll = 2e-16 #tolerance we'll be using for power methods
 nmax = 250 #maximum number of iterations 

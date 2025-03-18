@@ -1,4 +1,5 @@
-from matrix import Matrix
+import init
+from LinAlg.matrix import Matrix
 import sys
 
 def hilbert(n:int):

@@ -1,7 +1,8 @@
-from matrix import Matrix
-from utils import ones
-from norm import norm
-from inv import inv
+import init
+from LinAlg.matrix import Matrix
+from LinAlg.utils import ones
+from LinAlg.norm import norm
+from LinAlg.inv import inv
 
 toll = 2e-16 #tolerance we'll be using for power methods
 nmax = 250 #maximum number of iterations 
