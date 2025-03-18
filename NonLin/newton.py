@@ -1,6 +1,7 @@
 import sys
 import init
 from LinAlg.matrix import Vector
+
 def newton(x0:int,nmax:int,toll,f,df,mol:int):
 
     """
