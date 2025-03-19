@@ -162,16 +162,19 @@ class Matrix(ndarray):
 
     def __new__(cls,data,rows:int=0,columns:int=0):
         if rows < 2 or columns < 2:
-            if columns == 0 and len(data) == 1: #it's a row
+            if columns == 0 and len(data) == 1: #it's a row 
                 return Vector(data,is_row = 1)
-            elif type(data[0]) == int or type(data[0]) == float or type(data[0]) == complex:
+            try:
+                if len(data[0]) == 1:
+                    return Vector(data)
+                else:
+                    return super(Matrix, cls).__new__(cls)
+            except:
+ 
                 return Vector(data)
-            elif len(data[0]) != 1:
-                return Vector(data)
-            else:
-                return super(Matrix, cls).__new__(cls)
 
         else:
+            print('or here')
             return super(Matrix, cls).__new__(cls)
 
     def __init__(self,data,rows:int=0,columns:int=0):
@@ -208,6 +211,13 @@ class Vector(ndarray):
             return self.T()
         elif len(x) == 1: #it's a row vector, no change is needed
             return self
+        
+    def sum(self):
+        rows = len(self.matrix)
+        s = 0
+        for j in range(rows):
+            s += self[j][0]
+        return s
 
 def conj(integer:numbers):
     return complex(integer.real,-1*integer.imag)
