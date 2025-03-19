@@ -3,7 +3,7 @@ from math import atanh as archyperbtan
 from LinAlg.matrix import ndarray,Matrix
 
 def atanh(x):
-    if type(x) == ndarray:
+    if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
         for j in range(len(x)):

@@ -2,7 +2,7 @@ import init
 from LinAlg.matrix import ndarray,Matrix
 
 def root(x,n:int):
-    if type(x) == ndarray:
+    if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
         for j in range(len(x)):

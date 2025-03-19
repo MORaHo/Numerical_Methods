@@ -3,7 +3,7 @@ from math import asinh as archyperbsine
 from LinAlg.matrix import ndarray,Matrix
 
 def asinh(x):
-    if type(x) == ndarray:
+    if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
         for j in range(len(x)):

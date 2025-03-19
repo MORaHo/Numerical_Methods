@@ -14,7 +14,7 @@ def log(x,base:int=0):
     else:
         logarithm = ln
     
-    if type(x) == ndarray:
+    if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
         for j in range(len(x)):

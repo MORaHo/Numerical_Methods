@@ -3,7 +3,7 @@ from math import tan as tangent
 from LinAlg.matrix import ndarray,Matrix
 
 def tan(x):
-    if type(x) == ndarray:
+    if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
         for j in range(len(x)):

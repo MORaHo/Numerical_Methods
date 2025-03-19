@@ -3,7 +3,7 @@ from math import sinh as hyperbsine
 from LinAlg.matrix import ndarray,Matrix
 
 def sinh(x):
-    if type(x) == ndarray:
+    if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
         for j in range(len(x)):

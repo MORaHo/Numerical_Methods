@@ -3,7 +3,7 @@ from math import exp as exponential
 from LinAlg.matrix import ndarray,Vector,Matrix
 
 def exp(x):
-    if type(x) == ndarray:
+    if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
         for j in range(len(x)):
