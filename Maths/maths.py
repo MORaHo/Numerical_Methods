@@ -1,5 +1,5 @@
 import init
-from Math import abs,acos,acosh,asin,asinh,atan,atanh,ceil,cos,cosh,ew,exp,floor,log,root,sin,sinh,sqrt,tan,tanh
+from Maths import abs,acos,acosh,asin,asinh,atan,atanh,ceil,cos,cosh,ew,exp,floor,log,root,sin,sinh,sqrt,tan,tanh
 
 abs = abs.abs
 acos = acos.acos
