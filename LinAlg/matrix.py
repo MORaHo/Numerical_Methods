@@ -7,20 +7,23 @@ class ndarray():
 
     def __init__(self,data,rows:int,columns:int):
 
-        if type(data[0])==list:
-            data_size = len(data)*len(data[0])
-        else: 
-            data_size = len(data)
+        try:
 
-        if data_size != rows*columns:
-            print("Data doesn't fit in the size parameters.")
-            sys.exit()
+            if type(data[0])==list:
+                data_size = len(data)*len(data[0])
+            else: 
+                data_size = len(data)
 
-        if type(data) == list and type(data[0]) == list: #if the input data is already a 2d array
-            self.matrix = data
-        else:
-            self.matrix = [ data[ r*columns:r*columns+columns ] for r in range(rows) ]
+            if data_size != rows*columns:
+                print("Data doesn't fit in the size parameters.")
+                sys.exit()
 
+            if type(data) == list and type(data[0]) == list: #if the input data is already a 2d array
+                self.matrix = data
+            else:
+                self.matrix = [ data[ r*columns:r*columns+columns ] for r in range(rows) ]
+        except:
+            self.matrix = []
     
     def T(self): #returns matrix transpose
 
@@ -59,9 +62,12 @@ class ndarray():
         elif type(index)==slice:
             return self.matrix[index]
 
-        elif type(index)==tuple and len(index)==2:
-            y,x = index
-            return self.matrix[y][x]
+        try:
+            if type(index)==tuple and len(index)==2:
+                y,x = index
+                return self.matrix[y][x]
+        except:
+            return []
         
     def __setitem__(self,i,item):
         self.matrix[i] = item  
@@ -215,9 +221,12 @@ class Vector(ndarray):
     def sum(self):
         rows = len(self.matrix)
         s = 0
-        for j in range(rows):
-            s += self[j][0]
-        return s
+        try:
+            for j in range(rows):
+                s += self[j][0]
+            return s
+        except:
+            return s
 
 def conj(integer:numbers):
     return complex(integer.real,-1*integer.imag)
