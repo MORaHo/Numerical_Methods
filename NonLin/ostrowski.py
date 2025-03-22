@@ -1,7 +1,6 @@
 import sys
 import init
 from LinAlg.matrix import Vector
-from Math import cos,sin,exp,cosh,sinh
 
 def ostrowski(x0:int,nmax:int,toll,f,df,mol:int):
 
