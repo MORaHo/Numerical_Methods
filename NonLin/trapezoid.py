@@ -1,6 +1,5 @@
 import init
 from Misc.linspace import linspace
-from Maths.maths import cos
 
 def trapezoid(a,b,N:int,f):
     
