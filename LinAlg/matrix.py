@@ -180,7 +180,6 @@ class Matrix(ndarray):
                 return Vector(data)
 
         else:
-            print('or here')
             return super(Matrix, cls).__new__(cls)
 
     def __init__(self,data,rows:int=0,columns:int=0):

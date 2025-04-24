@@ -19,7 +19,7 @@ def zeros(m:int,n:int=1):
 
 def copy(A:ndarray):
     [Arows,Acols] = A.size()
-    N = [[ A[j][i] for i in range(Arows)] for j in range(Acols)]
+    N = [[ A[j][i] for i in range(Acols)] for j in range(Arows)]
     return Matrix(N)
 
 def diag(A:ndarray,offset_:int=0):
