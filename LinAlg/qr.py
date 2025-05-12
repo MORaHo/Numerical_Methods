@@ -41,6 +41,7 @@ def house_qr(A:Matrix):
     for k in range(t):
         v = get_column(A_k,0)
         alfa = norm(v)
+        print(v)
         v[0][0] += alfa*(v[k][0]/abs(v[k][0]))
         c = 2/(v.T()*v)
         Q_k = eye(m-k)-v*v.H()*c # for now just T not H
