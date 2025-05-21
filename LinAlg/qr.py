@@ -1,5 +1,6 @@
 import sys
 import init
+from math import sqrt
 from LinAlg.matrix import Matrix,Vector
 from LinAlg.norm import norm
 from LinAlg.utils import zeros,eye,copy
@@ -24,6 +25,35 @@ def minor(A:Matrix,offset_:int):
             Z[m][n] = A[m+offset_][n+offset_]
 
     return Z
+
+def project(vec1:Vector,vec2:Vector):
+    print(vec1.T()*vec2)
+    s = (vec1.T() * vec2) / (vec2.T() * vec2)
+    return vec2 * s
+
+def orthogonalise(A:Matrix):
+    [Arows,Acols] = A.size()
+    V = zeros(Arows,Acols)
+    for i in range(Acols):
+        veci = get_column(A,i)
+        const_vec_i = get_column(A,i)
+        for k in range(i):
+            veci -= project(const_vec_i,get_column(V,k))
+        V.set_column(i,veci)
+    return V
+
+def orthonormalise(A:Matrix):
+    V = orthogonalise(A)
+    for i in range(len(V)):
+        vec_i = get_column(V,i)
+        normal = sqrt(vec_i.T()*vec_i)
+        V.set_column(i,vec_i/normal)
+    return V
+
+def MGS_qr(A:Matrix):
+    Q = orthonormalise(A)
+    R = Q.T()*A
+    return [Q,R]
 
 def house_qr(A:Matrix):
 
@@ -61,4 +91,7 @@ def house_qr(A:Matrix):
     R = R_k
     return [Q,R]
 
-qr = qr_decomposition = house_qr
+#qr = qr_decomposition = house_qr
+qr = qr_decomposition = gram_schmidt = MGS_qr
+
+
