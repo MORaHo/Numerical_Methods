@@ -191,6 +191,15 @@ class Matrix(ndarray):
             columns = columns
         super().__init__(data=data,rows = rows,columns = columns)
 
+    def set_column(self,i:int,vec):
+        
+        if len(vec) != len(self.matrix):
+            print("Matrix dimensions don't match")
+            sys.exit()
+        for j in range(len(vec)):
+            self.matrix[j][i] = vec[j][0]
+
+
 class Vector(ndarray):
 
     def __init__(self,data,is_row:int=0):
