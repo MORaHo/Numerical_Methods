@@ -6,13 +6,6 @@ from LinAlg.norm import norm
 from LinAlg.utils import zeros,eye,copy
 from LinAlg.power import power
 
-def get_column(A:Matrix,i:int):
-    [Arows,_] = A.size()
-    a_i = []
-    for n in range(Arows):
-        a_i.append(A[n][i])
-    return Vector(a_i)
-
 def project(vec1:Vector,vec2:Vector):
     s = (vec1.T() * vec2) / (vec2.T() * vec2)
     return vec2 * s
