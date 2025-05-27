@@ -83,23 +83,31 @@ class ndarray():
                 y,x = index
                 if type(item) == Matrix:
                     if type(y) == slice and (type(x) == slice or type(x) == int):
+                        
                         if type(x) == slice:
+
                             y_start = int(0 if y.start == None else y.start)
                             y_end = int(len(self.matrix) if y.stop == None else y.stop)
                             x_start = int(0 if x.start == None else x.start)
                             x_end = int(len(self.matrix[0]) if x.stop == None else x.stop)
+                            
                             for j in range(y_start,y_end):
                                 for i in range(x_start,x_end):
                                     self.matrix[j][i] = item[j-y_start][i-x_start]
+                        
                         if type(x) == int:
+                            
                             y_start = int(0 if y.start == None else y.start)
                             y_end = int(len(self.matrix) if y.stop == None else y.stop)
+                            
                             for j in range(y_start,y_end):
                                     self.matrix[j][x] = item[j-y_start][x]
                 
                 if type(item) == Vector:
+
                     y_start = int(0 if y.start == None else y.start)
                     y_end = int(len(self.matrix) if y.stop == None else y.stop)
+                    
                     for j in range(y_start,y_end):
                             self.matrix[j][x] = item[j-y_start][0]
                 
