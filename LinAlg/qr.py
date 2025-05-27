@@ -4,7 +4,7 @@ from math import sqrt
 from LinAlg.matrix import Matrix,Vector
 from LinAlg.norm import norm
 from LinAlg.utils import zeros,eye,copy
-
+from LinAlg.power import power
 
 def get_column(A:Matrix,i:int):
     [Arows,_] = A.size()
@@ -13,21 +13,7 @@ def get_column(A:Matrix,i:int):
         a_i.append(A[n][i])
     return Vector(a_i)
 
-def minor(A:Matrix,offset_:int):
-
-    [Arows,Acols] = A.size()
-    Zrows = Arows-offset_
-    Zcols = Acols-offset_
-    Z = zeros(Zrows,Zcols)
-
-    for m in range(Zrows):
-        for n in range(Zcols):
-            Z[m][n] = A[m+offset_][n+offset_]
-
-    return Z
-
 def project(vec1:Vector,vec2:Vector):
-    print(vec1.T()*vec2)
     s = (vec1.T() * vec2) / (vec2.T() * vec2)
     return vec2 * s
 
@@ -35,19 +21,19 @@ def orthogonalise(A:Matrix):
     [Arows,Acols] = A.size()
     V = zeros(Arows,Acols)
     for i in range(Acols):
-        veci = get_column(A,i)
-        const_vec_i = get_column(A,i)
+        veci = A[:,i]
+        const_vec_i = A[:,i]
         for k in range(i):
-            veci -= project(const_vec_i,get_column(V,k))
-        V.set_column(i,veci)
+            veci -= project(const_vec_i,V[:,k])
+        V[:,i] = veci
     return V
 
 def orthonormalise(A:Matrix):
     V = orthogonalise(A)
     for i in range(len(V)):
-        vec_i = get_column(V,i)
+        vec_i = V[:,i]
         normal = sqrt(vec_i.T()*vec_i)
-        V.set_column(i,vec_i/normal)
+        V[:,i] = vec_i/normal
     return V
 
 def MGS_qr(A:Matrix):
@@ -55,43 +41,48 @@ def MGS_qr(A:Matrix):
     R = Q.T()*A
     return [Q,R]
 
-def house_qr(A:Matrix):
+def householder(x:Vector):
+    alpha = x[0][0]
+    s = norm(Vector(x[1:]))**2
+    v = copy(x)
+
+    if s == 0:
+        tau = 0
+    else:
+        t = sqrt(alpha**2 + s)
+        if alpha <= 0:
+            v[0][0] = alpha-t
+        else:
+            v[0][0] = -s / (alpha+t)
+
+        tau = 2 * v[0][0]**2 / (s+v[0][0]**2)
+        v = v/v[0][0]
+    return [v,tau]
+
+def qr_householder(A:Matrix):
+    # qr method applied through householder reflections
 
     [m,n] = A.size() # m = Arows and n = Acols, to avoid rewriting a lot
+    ending = n-1
     if m != n:
-        print("Currently unable to decompose non-square matrices")
-        sys.exit()
+        ending = n
     if m<n:
         print("Matrix cannot be QR decomposed")
         sys.exit()
     
-    t = (m-1)*(m-1<=n) + (n)*(n<m-1)
-    A_k = copy(A)
+
+    R = copy(A)
     Q = eye(m)
-    for k in range(t):
-        v = get_column(A_k,0)
-        alfa = norm(v)
-        print(v)
-        v[0][0] += alfa*(v[k][0]/abs(v[k][0]))
-        c = 2/(v.T()*v)
-        Q_k = eye(m-k)-v*v.H()*c # for now just T not H
-        if k:
-            I = eye(m)
-            for i in range(m-k):
-                for j in range(n-k):
-                    I[i+k][j+k] = Q_k[i][j]
-            Q_k = I
-            Q = Q * Q_k.T()
-            R_k = Q_k*R_k
-        else:
-            R_k = Q_k*A
-            Q = Q_k
-        A_k = minor(R_k,k+1)
-    
-    R = R_k
-    return [Q,R]
+    for k in range(0,ending):
 
-#qr = qr_decomposition = house_qr
-qr = qr_decomposition = gram_schmidt = MGS_qr
+        [v,tau] = householder(R[k:,k])
+        H = eye(m)
+        T = tau * (v.col() * v.row())
+        H[k:,k:] -= T
+        R = H*R
+        Q = H*Q
 
+    return [Q.T(),R]
 
+qrgs = gram_schmidt = MGS_qr
+qr = qrh =qr_householder
