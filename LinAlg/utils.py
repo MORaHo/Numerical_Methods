@@ -68,12 +68,21 @@ def diag(A:ndarray,offset_:int=0):
         print("Matrix is not vector or square matrix")
         sys.exit()
 
-def tril(A:ndarray):
+def tril(A:Matrix):
     n,m = A.size() # m = Arows and n = Acols, to avoid rewriting a lot
     M = zeros(n,m)
     for i in range(n):
         for j in range(m):
             if i >= j:
+                M[i][j] = A[i][j]
+    return M
+
+def triu(A:Matrix):
+    n,m = A.size() # m = Arows and n = Acols, to avoid rewriting a lot
+    M = zeros(n,m)
+    for i in range(n):
+        for j in range(m):
+            if i <= j:
                 M[i][j] = A[i][j]
     return M
 
