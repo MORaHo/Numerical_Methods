@@ -3,7 +3,8 @@ import init
 from LinAlg.matrix import Matrix,Vector
 from LinAlg.lu import lu
 from LinAlg.qr import qr
-from LinAlg.utils import zeros
+from LinAlg.utils import zeros, tril, triu
+from LinAlg.det import det
 
 def forward_substitution(L:Matrix,b:Matrix):
     
@@ -44,6 +45,9 @@ def solve(A:Matrix,b:Vector):
         print('System cannot be solved')
         sys.exit()
 
+    if det(A) == 0:
+        print("Solution may not be unique!")
+
     #this will be expanded to handle more and more cases, initially I intend to add a QR solver and in the end for this function to basically become the \ of matlab
     
     if m != n:
@@ -52,9 +56,17 @@ def solve(A:Matrix,b:Vector):
         R1 = R[:n,:n]
         y = Q1.T()*b.col()
         x = bkw_sub(R1,y)
+    elif tril(A) == A:
+        x = fwd_sub(A,b)
+    elif triu(A) == A:
+        x = bkw_sub(A,y)
     else:
-        [L,U,_] = lu(A)
-        y = fwd_sub(L,b)
+        [L,U,P] = lu(A)
+        y = fwd_sub(L,P*b)
         x = bkw_sub(U,y)
 
     return x
+
+A = Matrix([[2,1,0],[1,0,1],[0,1,1]])
+b = Vector([1,1,2])
+x = solve(A,b)
