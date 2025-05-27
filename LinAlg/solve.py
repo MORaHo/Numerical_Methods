@@ -2,10 +2,8 @@ import sys
 import init
 from LinAlg.matrix import Matrix,Vector
 from LinAlg.lu import lu
+from LinAlg.qr import qr
 from LinAlg.utils import zeros
-from LinAlg.eig import eig
-
-toll = 2**(-10)
 
 def forward_substitution(L:Matrix,b:Matrix):
     
@@ -24,7 +22,6 @@ def forward_substitution(L:Matrix,b:Matrix):
 fwd_sub = forward_substitution
 
 def backward_substitution(U:Matrix,y:Matrix):
-    
     y = y.col()
     n = len(y)-1
     x = zeros(n+1,1).matrix
@@ -42,24 +39,22 @@ bkw_sub = backward_substitution
 
 def solve(A:Matrix,b:Vector):
     
-    [rows,cols] = A.size()
-    if rows < cols:
+    [m,n] = A.size()
+    if m < n:
         print('System cannot be solved')
         sys.exit()
 
-    #this will be expanded to handle more and more cases, initially I intend to add a QR solver and for this function to basically become the \ of matlab
-    lambdas_ = eig(A)
-    rank = len(lambdas_)
-    for j in range(len(lambdas_)):
-        if lambdas_[j][0] < toll:
-            rank = j+1
-            break
+    #this will be expanded to handle more and more cases, initially I intend to add a QR solver and in the end for this function to basically become the \ of matlab
     
-    if rank != rows:
-        A = Matrix(A[0:rank])
-    print(A)
-    [L,U,_] = lu(A)
-    y = forward_substitution(L,b.col())
-    x = backward_substitution(U,y)
+    if m != n:
+        [Q,R] = qr(A)
+        Q1 = Q[:m,:n]
+        R1 = R[:n,:n]
+        y = Q1.T()*b.col()
+        x = bkw_sub(R1,y)
+    else:
+        [L,U,_] = lu(A)
+        y = fwd_sub(L,b)
+        x = bkw_sub(U,y)
 
     return x
