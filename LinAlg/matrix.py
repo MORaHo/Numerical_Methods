@@ -107,7 +107,7 @@ class ndarray():
                 return self.matrix[y][x]
         
         else:
-            self.matrix[i] = item  
+            self.matrix[index] = item  
         
     def __add__(self,B): # addition
 
