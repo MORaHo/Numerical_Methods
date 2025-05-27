@@ -63,14 +63,39 @@ class ndarray():
             return self.matrix[index]
 
         try:
+
             if type(index)==tuple and len(index)==2:
                 y,x = index
+
+                if type(y) == slice and (type(x) == slice or type(x) == int):
+                    M = self.matrix[y]
+                    for i,_ in enumerate(M):
+                        M[i] = M[i][x]
+                    return Matrix(M)
+
                 return self.matrix[y][x]
         except:
             return []
         
-    def __setitem__(self,i,item):
-        self.matrix[i] = item  
+    def __setitem__(self,index,item):
+
+        if type(index)==tuple and len(index)==2 and type(item) == Matrix:
+                y,x = index
+
+                if type(y) == slice and (type(x) == slice or type(x) == int):
+                    y_start = int(0 if y.start == None else y.start)
+                    y_end = int(len(self.matrix) if y.stop == None else y.stop)
+                    x_start = int(0 if x.start == None else x.start)
+                    x_end = int(len(self.matrix[0]) if x.stop == None else x.stop)
+                    for j in range(y_start,y_end):
+                        for i in range(x_start,x_end):
+                            self.matrix[j][i] = item[j-y.start][i-x.start]
+
+
+                return self.matrix[y][x]
+        
+        else:
+            self.matrix[i] = item  
         
     def __add__(self,B): # addition
 
@@ -205,8 +230,10 @@ class Vector(ndarray):
     def __init__(self,data,is_row:int=0):
         if is_row and type(data[0]) != list:
             super().__init__(data,1,len(data))
-        elif len(data) == 1:
+        elif len(data) == 1 and type(data[0]) == list:
             super().__init__(data,1,len(data[0]))
+        elif len(data) == 1:
+            super().__init__(data,1,1)
         else:
             super().__init__(data,len(data),1)
 
