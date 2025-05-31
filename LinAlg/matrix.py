@@ -207,6 +207,7 @@ class ndarray():
             return Matrix(P,rows,cols)
     
     def size(self):
+        # returns [rows,columns]
         return [len(self.matrix),len(self.matrix[0])]
 
 class Matrix(ndarray):

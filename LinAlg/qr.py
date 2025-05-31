@@ -78,4 +78,4 @@ def qr_householder(A:Matrix):
     return [Q.T(),R]
 
 qrgs = gram_schmidt = MGS_qr
-qr = qrh =qr_householder
+qr = qrh = qr_householder #Giving preference for qr name to the Householder method since it can solve non-square matrix cases
