@@ -4,6 +4,7 @@ from typing import Union
 from LinAlg.matrix import ndarray,Matrix,Vector
 
 numbers = Union[int,float,complex]
+toll = 2e-8
 
 def eye(n:int):
     I = [ [ 1 if i == j else 0 for j in range(n) ] for i in range(n) ]
@@ -99,3 +100,20 @@ def ndabs(A:ndarray): #absolute value for ndarrays
         for i in range(Mcols):
             M[j][i] = abs(M[j][i])
     return M
+
+def isequal(A:ndarray,B:ndarray):
+    [mA,nA] = A.size()
+    [mB,nB] = B.size()
+
+    if (mA != mB) or (nA != nB):
+        print("Dimensions do not match")
+        sys.exit()
+    
+    n = nA
+    m = mA
+
+    for j in range(m):
+        for i in range(n):
+            if A[j][i] - B[j][i] > toll:
+                return False
+    return True
