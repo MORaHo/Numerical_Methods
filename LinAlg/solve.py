@@ -1,13 +1,13 @@
 import sys
 import init
-from LinAlg.matrix import Matrix,Vector
 from LinAlg.lu import lu
 from LinAlg.qr import qr
-from LinAlg.chol import chol
-from LinAlg.utils import zeros, tril, triu,diag, isequal
 from LinAlg.det import det
-from LinAlg.hess_solve import triag
+from LinAlg.chol import chol
 from LinAlg.thomas import thomas
+from LinAlg.hess_solve import triag
+from LinAlg.matrix import Matrix,Vector
+from LinAlg.utils import zeros, tril, triu,diag, isequal
 
 def forward_substitution(L:Matrix,b:Matrix):
     
