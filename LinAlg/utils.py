@@ -114,6 +114,6 @@ def isequal(A:ndarray,B:ndarray):
 
     for j in range(m):
         for i in range(n):
-            if A[j][i] - B[j][i] > toll:
+            if abs(A[j][i] - B[j][i]) > toll:
                 return False
     return True

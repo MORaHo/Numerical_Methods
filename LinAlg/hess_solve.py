@@ -6,6 +6,8 @@ from LinAlg.matrix import Matrix,Vector
 toll = 2e-16 #tolerance we'll be using for power methods
 nmax = 250 #maximum number of iterations 
 
+# currenctly using this gives a lot of error so for now I wull substitute with a LU decomposition
+
 def triag(A:Matrix):
     
     A_k = A

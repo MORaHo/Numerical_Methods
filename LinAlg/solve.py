@@ -70,14 +70,19 @@ def solve(A:Matrix,b:Vector):
     #    y = fwd_sub(L,P*b)
     #    x = bkw_sub(U,y)
     else:
-        
         if isequal((triu(A) + diag(diag(A,-1),-1)),A): #is the matrix upper-hessenberg
             if isequal((tril(A) + diag(diag(A,1),1)),A): #If matrix is tridiagonal
                 #apply Thomas algorithm
                 x = thomas(A,b)
             else:
-                A = triag(A) #convert the matrix to upper-triangular
-                x = bkw_sub(A,b)
+                #A = triag(A) #convert the matrix to upper-triangular
+                #A = triu(A)
+                #x = bkw_sub(A,b)
+                # since the hess_solve is not working right now, I have defaulted to a LU decomposition
+                [L,U,P] = lu(A)
+                y = fwd_sub(L,P*b)
+                x = bkw_sub(U,y)
+
         else: #in any other case
             try: #try to apply cholesky
                 L = chol(A)
@@ -89,8 +94,8 @@ def solve(A:Matrix,b:Vector):
                 x = bkw_sub(U,y)
     return x
 
-A = Matrix([[2,1,0,0,0],[1,2,1,0,0],[0,1,2,1,0],[0,0,1,2,1],[0,0,0,1,2]])
+A = Matrix([[2,1,0,0,1],[1,2,1,0,0],[0,1,2,1,0],[0,0,1,2,1],[0,0,0,1,2]])
 b = Vector([1,1,1,1,1])
 x = solve(A,b)
 print(x)
-print(A*x)
+print(A*x-b)
