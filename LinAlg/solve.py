@@ -4,8 +4,10 @@ from LinAlg.matrix import Matrix,Vector
 from LinAlg.lu import lu
 from LinAlg.qr import qr
 from LinAlg.chol import chol
-from LinAlg.utils import zeros, tril, triu
+from LinAlg.utils import zeros, tril, triu,diag, isequal
 from LinAlg.det import det
+from LinAlg.hess_solve import triag
+from LinAlg.thomas import thomas
 
 def forward_substitution(L:Matrix,b:Matrix):
     
@@ -51,29 +53,44 @@ def solve(A:Matrix,b:Vector):
 
     #this will be expanded to handle more and more cases, initially I intend to add a QR solver and in the end for this function to basically become the \ of matlab
     
+    # Following diagram in the algorithm section of https://uk.mathworks.com/help/matlab/ref/double.mldivide.html
+
     if m != n:
         [Q,R] = qr(A)
         Q1 = Q[:m,:n]
         R1 = R[:n,:n]
         y = Q1.T()*b.col()
         x = bkw_sub(R1,y)
-    elif tril(A) == A:
+    elif isequal(tril(A),A):
         x = fwd_sub(A,b)
-    elif triu(A) == A:
+    elif isequal(triu(A),A):
         x = bkw_sub(A,y)
+    #elif m <= 16:
+    #    [L,U,P] = lu(A)
+    #    y = fwd_sub(L,P*b)
+    #    x = bkw_sub(U,y)
     else:
-        try:
-            L = chol(A)
-            y = bkw_sub(L.T(),b)
-            x = fwd_sub(L,y)
-        except:
-            [L,U,P] = lu(A)
-            y = fwd_sub(L,P*b)
-            x = bkw_sub(U,y)
-
+        
+        if isequal((triu(A) + diag(diag(A,-1),-1)),A): #is the matrix upper-hessenberg
+            if isequal((tril(A) + diag(diag(A,1),1)),A): #If matrix is tridiagonal
+                #apply Thomas algorithm
+                x = thomas(A,b)
+            else:
+                A = triag(A) #convert the matrix to upper-triangular
+                x = bkw_sub(A,b)
+        else: #in any other case
+            try: #try to apply cholesky
+                L = chol(A)
+                y = bkw_sub(L.T(),b)
+                x = fwd_sub(L,y)
+            except: #if cholesky fails (A is not symmetric positive definite) then apply LU factorization
+                [L,U,P] = lu(A)
+                y = fwd_sub(L,P*b)
+                x = bkw_sub(U,y)
     return x
 
-#A = Matrix([[2,1,0],[1,0,1],[0,1,1]])
-#b = Vector([1,1,2])
-#x = solve(A,b)
-#print(x)
+A = Matrix([[2,1,0,0,0],[1,2,1,0,0],[0,1,2,1,0],[0,0,1,2,1],[0,0,0,1,2]])
+b = Vector([1,1,1,1,1])
+x = solve(A,b)
+print(x)
+print(A*x)
