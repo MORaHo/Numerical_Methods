@@ -3,6 +3,7 @@ import init
 from LinAlg.matrix import Matrix,Vector
 from LinAlg.lu import lu
 from LinAlg.qr import qr
+from LinAlg.chol import chol
 from LinAlg.utils import zeros, tril, triu
 from LinAlg.det import det
 
@@ -61,12 +62,18 @@ def solve(A:Matrix,b:Vector):
     elif triu(A) == A:
         x = bkw_sub(A,y)
     else:
-        [L,U,P] = lu(A)
-        y = fwd_sub(L,P*b)
-        x = bkw_sub(U,y)
+        try:
+            L = chol(A)
+            y = bkw_sub(L.T(),b)
+            x = fwd_sub(L,y)
+        except:
+            [L,U,P] = lu(A)
+            y = fwd_sub(L,P*b)
+            x = bkw_sub(U,y)
 
     return x
 
-A = Matrix([[2,1,0],[1,0,1],[0,1,1]])
-b = Vector([1,1,2])
-x = solve(A,b)
+#A = Matrix([[2,1,0],[1,0,1],[0,1,1]])
+#b = Vector([1,1,2])
+#x = solve(A,b)
+#print(x)
