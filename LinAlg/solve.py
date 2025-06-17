@@ -5,7 +5,7 @@ from LinAlg.qr import qr
 from LinAlg.det import det
 from LinAlg.chol import chol
 from LinAlg.thomas import thomas
-from LinAlg.hess_solve import triag
+from LinAlg.hess_to_triang import triag
 from LinAlg.matrix import Matrix,Vector
 from LinAlg.utils import zeros, tril, triu,diag, isequal
 
@@ -75,12 +75,8 @@ def solve(A:Matrix,b:Vector):
                 #apply Thomas algorithm
                 x = thomas(A,b)
             else:
-                #A = triag(A) #convert the matrix to upper-triangular
-                #A = triu(A)
-                #x = bkw_sub(A,b)
-                # since the hess_solve is not working right now, I have defaulted to a LU decomposition
-                [L,U,P] = lu(A)
-                y = fwd_sub(L,P*b)
+                [U,Q] = triag(A) #decompose Hessenberg matrix into upper-triangular and Q (through givens rotations), which allows use to solve system
+                y = Q.T()*b.col() #Q.T() = inv(Q)
                 x = bkw_sub(U,y)
 
         else: #in any other case
@@ -94,8 +90,8 @@ def solve(A:Matrix,b:Vector):
                 x = bkw_sub(U,y)
     return x
 
-A = Matrix([[2,1,0,0,1],[1,2,1,0,0],[0,1,2,1,0],[0,0,1,2,1],[0,0,0,1,2]])
-b = Vector([1,1,1,1,1])
-x = solve(A,b)
-print(x)
-print(A*x-b)
+#A = Matrix([[2,1,0,0,1,0],[1,2,1,0,0,1],[0,1,2,1,0,0],[0,0,1,2,1,0],[0,0,0,1,2,1],[0,0,0,0,1,2]])
+#b = Vector([1,1,1,1,1,1])
+#x = solve(A,b)
+#print(x)
+#print(A*x-b)
