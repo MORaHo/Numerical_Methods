@@ -20,7 +20,7 @@ class ndarray():
 
             if type(data) == list and type(data[0]) == list: #if the input data is already a 2d array
                 self.matrix = data
-            else:
+            else: # if data is a 1-d array
                 self.matrix = [ data[ r*columns:r*columns+columns ] for r in range(rows) ]
         except:
             self.matrix = []
@@ -98,7 +98,9 @@ class ndarray():
                         x_start = int(0 if x.start == None else x.start)
                         x_end = int(len(self.matrix[0]) if x.stop == None else x.stop)
 
-                        if i_n*i_m != (y_end-y_start+1)*(x_end-x_start+1):
+                        if i_n != (y_end-y_start+1) or i_m != (x_end-x_start+1):
+                            
+                            ## If the object we are trying to inset doesn't match the size of the insertion range, then we have an error.
                             print("Item change dimensions do not match, check the what you are trying to change")
                             sys.exit()
 
@@ -118,6 +120,18 @@ class ndarray():
                         
                         for j in range(y_start,y_end):
                                 self.matrix[j][x] = item[j-y_start][x]
+                
+                elif type(y) == int and type(x) == slice:
+
+                    x_start = int(0 if x.start == None else x.start)
+                    x_end = int(len(self.matrix) if x.stop == None else x.stop)
+
+                    if i_n != (x_end-x_start+1):
+                        print("Item change dimensions do not match, check the what you are trying to change")
+                        sys.exit()
+                    
+                    for j in range(x_start,x_end):
+                            self.matrix[x][j] = item[x][j-y_start]
 
             elif type(item) == Vector:
                 
@@ -146,27 +160,25 @@ class ndarray():
     def __add__(self,B): # addition
 
         M = self.matrix
-        if type(self) == type(B) and len(M) == len(B) and len(M[0]) == len(B[0]):
-            C = [ [ M[i][j]+B[i][j] for j in range(len(B[0])) ] for i in range(len(B)) ]
-            return Matrix(C)
-        else:
+
+        if type(self) != type(B) or len(M) != len(B) or len(M[0]) != len(B[0]):
             print("Matrix dimensions or types don't match")
             sys.exit()
+
+        A = [ [ M[i][j]+B[i][j] for j in range(len(B[0])) ] for i in range(len(B)) ]
+        return Matrix(A)
 
     def __sub__(self,s): #subdivision
 
         M = self.matrix
-        S = [ [ 0 for _ in range(len(M[0])) ] for _ in range(len(M)) ]
 
         if type(self) != type(s) or len(M) != len(s) or len(M[0]) != len(M[0]):
             print("Matrix dimensions or types do not match")
             sys.exit()          
-        else:
-            for i in range(len(M)):
-                for j in range(len(M[0])):
-                    S[i][j] = M[i][j] - s[i][j]
+
+        S = [ [ M[i][j]-s[i][j] for j in range(len(s[0])) ] for i in range(len(s)) ]
             
-            return Matrix(S)
+        return Matrix(S)
 
     def __mul__(self,B): # element-wise scalar multiplication and dot product
 
@@ -205,7 +217,7 @@ class ndarray():
     def __rmul__(self,m):
         return self.__mul__(m)
 
-    def __truediv__(self,s): #element-wise division
+    def __truediv__(self,s): #element-wise division, matrix can't have matrix as denominator
         M = self.matrix
         S = [[M[j][i]/s  for i in range(len(M[0])) ] for j in range(len(M))]
         return Matrix(S)
@@ -281,7 +293,7 @@ class Vector(ndarray):
         x = self.matrix
         if len(x) == 1: #matrix is row vector, need to return column vector
             return self.T()
-        elif len(x[0]) == 1: #it's a column vector, no change is needed
+        else: #it's a column vector, no change is needed
             return self   
 
     def row(self): #function to make vectors columns
@@ -289,7 +301,7 @@ class Vector(ndarray):
         x = self.matrix
         if len(x[0]) == 1: #matrix is column vector, need to return row vector
             return self.T()
-        elif len(x) == 1: #it's a row vector, no change is needed
+        else: #it's a row vector, no change is needed
             return self
         
     def sum(self):

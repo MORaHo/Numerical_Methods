@@ -4,6 +4,9 @@ from LinAlg.utils import diag,zeros
 
 def thomas(A:Matrix,d:Vector):
 
+    # Thomas algorithm for solving tridiagonal matrices
+    # https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm
+
     c = diag(A,1)
     b = diag(A)
     a = diag(A,-1)

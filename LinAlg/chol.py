@@ -8,6 +8,7 @@ def chol(A:Matrix):
     L = copy(A)
 
     for k in range(m):
+        
         L[k][k] = sqrt(L[k,k])
 
         for i in range(k+1,m):

@@ -67,7 +67,7 @@ def qr_householder(A:Matrix):
     R = copy(A)
     Q = eye(m)
     for k in range(0,ending):
-
+        # applying householder reflections to convert A to upper-triangular
         [v,tau] = householder(R[k:,k])
         H = eye(m)
         T = tau * (v.col() * v.row())

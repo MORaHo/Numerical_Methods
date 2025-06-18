@@ -50,30 +50,27 @@ def solve(A:Matrix,b:Vector):
 
     if det(A) == 0:
         print("Solution may not be unique!")
-
-    #this will be expanded to handle more and more cases, initially I intend to add a QR solver and in the end for this function to basically become the \ of matlab
     
     # Following diagram in the algorithm section of https://uk.mathworks.com/help/matlab/ref/double.mldivide.html
 
-    if m != n:
-        [Q,R] = qr(A)
+    if m != n: #if rectangular
+        [Q,R] = qr(A) #apply qr
         Q1 = Q[:m,:n]
-        R1 = R[:n,:n]
+        R1 = R[:n,:n] # remove rows which are not filled in
         y = Q1.T()*b.col()
         x = bkw_sub(R1,y)
-    elif isequal(tril(A),A):
+    elif isequal(tril(A),A): #lower triangular matrix can easily be solved
         x = fwd_sub(A,b)
-    elif isequal(triu(A),A):
+    elif isequal(triu(A),A): # upper triangular matrix can easily be solved
         x = bkw_sub(A,y)
-    #elif m <= 16:
-    #    [L,U,P] = lu(A)
-    #    y = fwd_sub(L,P*b)
-    #    x = bkw_sub(U,y)
+    elif m <= 16:
+        [L,U,P] = lu(A)
+        y = fwd_sub(L,P*b)
+        x = bkw_sub(U,y)
     else:
         if isequal((triu(A) + diag(diag(A,-1),-1)),A): #is the matrix upper-hessenberg
             if isequal((tril(A) + diag(diag(A,1),1)),A): #If matrix is tridiagonal
-                #apply Thomas algorithm
-                x = thomas(A,b)
+                x = thomas(A,b) #apply thomas algorithm
             else:
                 [U,Q] = triag(A) #decompose Hessenberg matrix into upper-triangular and Q (through givens rotations), which allows use to solve system
                 y = Q.T()*b.col() #Q.T() = inv(Q)
@@ -89,9 +86,3 @@ def solve(A:Matrix,b:Vector):
                 y = fwd_sub(L,P*b)
                 x = bkw_sub(U,y)
     return x
-
-#A = Matrix([[2,1,0,0,1,0],[1,2,1,0,0,1],[0,1,2,1,0,0],[0,0,1,2,1,0],[0,0,0,1,2,1],[0,0,0,0,1,2]])
-#b = Vector([1,1,1,1,1,1])
-#x = solve(A,b)
-#print(x)
-#print(A*x-b)
