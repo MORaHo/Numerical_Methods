@@ -135,15 +135,19 @@ class ndarray():
 
             elif type(item) == Vector:
                 
+                ####
+                # This needs to be fixed to work with both row and column vectors
+                ####
+                
                 i_n = len(item)
-                y_start = int(0 if y.start == None else y.start)
-                y_end = int(len(self.matrix) if y.stop == None else y.stop)
+                start = int(0 if y.start == None else y.start)
+                end = int(len(self.matrix) if y.stop == None else y.stop)
 
-                if i_n != (y_end-y_start+1):
+                if i_n != (end-start+1):
                     print("Item change dimensions do not match, check the what you are trying to change")
                     sys.exit()
                 
-                for j in range(y_start,y_end):
+                for j in range(start,end):
                         self.matrix[j][x] = item[j-y_start][0]
 
             elif type(item) in numbers.__args__:

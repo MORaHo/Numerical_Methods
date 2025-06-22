@@ -9,7 +9,7 @@ from LinAlg.hess_to_triang import triag
 from LinAlg.matrix import Matrix,Vector
 from LinAlg.utils import zeros, tril, triu,diag, isequal
 
-def forward_substitution(L:Matrix,b:Matrix):
+def forward_substitution(L:Matrix,b:Vector):
     
     b = b.col()
     y = []
@@ -25,10 +25,10 @@ def forward_substitution(L:Matrix,b:Matrix):
 
 fwd_sub = forward_substitution
 
-def backward_substitution(U:Matrix,y:Matrix):
+def backward_substitution(U:Matrix,y:Vector):
     y = y.col()
     n = len(y)-1
-    x = zeros(n+1,1).matrix
+    x = zeros(n+1,1)
     x[n][0] = y[n][0]/U[n][n]
     
     for j in range(n-1,-1,-1):
@@ -85,4 +85,11 @@ def solve(A:Matrix,b:Vector):
                 [L,U,P] = lu(A)
                 y = fwd_sub(L,P*b)
                 x = bkw_sub(U,y)
+    print(x.matrix)
     return x
+
+A = Matrix([[2,1,0,0,1,0],[1,2,1,0,0,1],[0,1,2,1,0,0],[0,0,1,2,1,0],[0,0,0,1,2,1],[0,0,0,0,1,2]])
+b = Vector([1,1,1,1,1,1])
+x = solve(A,b)
+print(x)
+print(A*x-b)

@@ -1,6 +1,6 @@
 import init
 from LinAlg.matrix import Matrix
-import chols
+from LinAlg.chol import chol
 
 def spd(A:Matrix):
     # Returns if the matrix is symmetric positive definite.
