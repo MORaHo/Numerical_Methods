@@ -5,6 +5,10 @@ from LinAlg.matrix import Matrix,Vector,ndarray
 
 ### This file implements tests to see if all the functionalities in LinAlg.matrix function or not, since without them nothing else will work
 
+def alert(message:str):
+    print(message)
+    sys.exit()
+
 ## Matrix generation test
 
 matrix = [[1,1,1],[1,1,1],[1,1,1]]
@@ -13,8 +17,7 @@ A_ = Matrix([1,1,1,1,1,1,1,1,1],3,3)
 tests_passed = 0
 
 if A.matrix != matrix or A_.matrix != matrix:
-    print("Major error: Matrix generation not working!")
-    sys.exit()
+    alert("Major error: Matrix generation not working!")
 
 x = Vector([1,1,1,1,1])
 vector_matrix = [[1],[1],[1],[1],[1]]
@@ -34,8 +37,7 @@ row = Matrix([[1,1,1,1,1]])
 row_matrix = [[1,1,1,1,1]]
 
 if x.matrix != vector_matrix or row.matrix != row_matrix:
-    print("Vector not generating properly from Matrix call")
-    sys.exit()
+    alert("Vector not generating properly from Matrix call")
 
 ## __setitem__ test
 
@@ -50,8 +52,7 @@ A2[1:2,1:2] = B
 C2 = Matrix([[1,1,1],[1,2,2],[1,2,2]])
 
 if not isequal(A1,C1) or not isequal(A2,C2):
-    print("Set item not working")
-    sys.exit()
+    alert("Set item not working")
 
 tests_passed += 1
 
@@ -61,5 +62,44 @@ A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
 T = Matrix([[1,4,7],[2,5,8],[3,6,9]])
 
 if not isequal(A.T(),T):
-    print("Transpose matrix generation not working!")
+    alert("Transpose matrix generation method not working!")
+
+tests_passed += 1
+
+if len(A) != 3:
+    print("len(A) not working!")
     sys.exit()
+
+tests_passed += 1
+
+A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
+B = Matrix([[1,1,1],[1,1,1],[1,1,1]])
+C = A + B
+D = Matrix([[2,3,4],[5,6,7],[8,9,10]])
+
+if not isequal(C,D):
+    alert("Sum method not working! (general case)")
+
+tests_passed += 1
+
+E = Matrix([[1,2,3],[4,5,6]])
+
+try:
+    E + D
+    alert("Sum method not working, adding matrices of different sizes!")
+except:
+    tests_passed += 1
+
+C = A - B
+D = Matrix([[0,1,2],[3,4,5],[6,7,8]])
+
+if not isequal(C,D):
+    alert("Subtraction method not working")
+
+A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
+alpha = 2.5
+B = alpha * A
+C = Matrix([[2.5,5,7.5],[10,12.5,15],[17.5,20,22.5]])
+
+if not isequal(B,C):
+    alert("Integer-matrix multiplication sub-method not working")
