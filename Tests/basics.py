@@ -23,8 +23,7 @@ x = Vector([1,1,1,1,1])
 vector_matrix = [[1],[1],[1],[1],[1]]
 
 if x.matrix != vector_matrix:
-    print("Vector not generating properly")
-    sys.exit()
+    alert("Vector not generating properly")
 
 tests_passed += 1
 
@@ -67,8 +66,7 @@ if not isequal(A.T(),T):
 tests_passed += 1
 
 if len(A) != 3:
-    print("len(A) not working!")
-    sys.exit()
+    alert("len(A) not working!")
 
 tests_passed += 1
 
@@ -76,7 +74,6 @@ A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
 B = Matrix([[1,1,1],[1,1,1],[1,1,1]])
 C = A + B
 D = Matrix([[2,3,4],[5,6,7],[8,9,10]])
-
 if not isequal(C,D):
     alert("Sum method not working! (general case)")
 
@@ -85,6 +82,7 @@ tests_passed += 1
 E = Matrix([[1,2,3],[4,5,6]])
 
 try:
+    print("If the next message is 'Matrix dimensions of types don't match (Addition)', that is what should happen")
     E + D
     #if this works as it should "Matrix dimensions or types don't match", which is what should happen as they do not effectively match
     alert("Sum method not working, adding matrices of different sizes!")
