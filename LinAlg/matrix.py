@@ -246,6 +246,7 @@ class ndarray():
             return Matrix(I,rows,cols)
         
         # matmul didn't work for some reason I just chose to repurpose the power operator to permit element-wise matrix multiplication
+        # this will be useful when discretizing for non-linear analysis and solving ODEs
         elif isinstance(b,ndarray):
             if self.size() != b.size():
                 print("Dimensions do not match for element-wise multiplication")

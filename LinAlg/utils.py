@@ -106,7 +106,7 @@ def isequal(A:ndarray,B:ndarray):
     [mB,nB] = B.size()
 
     if (mA != mB) or (nA != nB):
-        print("Dimensions do not match")
+        print("Dimensions of matrices being compared do not match")
         sys.exit()
     
     n = nA
