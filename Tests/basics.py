@@ -116,3 +116,31 @@ x *= x.T()
 
 if not isequal(A,y) or not isequal(x,D):
     alert("rmul not working") #this only limited to the first two cases
+
+A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
+B = A/2
+C = Matrix([[1/2,2/2,3/2],[4/2,5/2,6/2],[7/2,8/2,9/2]])
+
+if not isequal(B,C):
+    alert("Division not working")
+
+## Element-wise multiplication test, this type of multiplication is needed in non-linear analysis to find the y values of a given funciton
+A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
+B = Matrix([[2,3,4],[5,6,7],[8,9,10]])
+C = Matrix([[2,6,12],[20,30,42],[56,72,90]])
+
+if not isequal(A**B,C):
+    alert("Element-wise multiplication not working")
+
+A = Matrix([[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]])
+B = Matrix([[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1]])
+
+if A.size() != [3,5] or B.size() != [5,4]:
+    alert("Size method not working!")
+
+x = Vector([1,1,1,1,1])
+y = Vector([1,1,1,1,1],is_row=1)
+
+
+if not isequal(x.row(),y) or not isequal(y.col(),x):
+    alert("Row or column methods not working!")
