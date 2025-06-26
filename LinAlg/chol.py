@@ -1,7 +1,7 @@
 import init
 from LinAlg.matrix import Matrix
 from math import sqrt
-from utils import copy
+from LinAlg.utils import copy
 
 def chol(A:Matrix):
     [m,_] = A.size()
