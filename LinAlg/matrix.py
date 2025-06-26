@@ -209,7 +209,7 @@ class ndarray():
             print("Dimensions of the two matrices don't match")
             sys.exit()
 
-        Z = [[ 0 for _ in range(len(B[0]))] for _ in range(len(M))] 
+        Z = Matrix([[ 0 for _ in range(len(B[0]))] for _ in range(len(M))])
         n = len(M[0])
         
         #dot-product
@@ -223,7 +223,7 @@ class ndarray():
         if len(Z) == 1 and len(Z[0]) == 1:
             return Z[0][0]
         else:
-            return Matrix(Z)
+            return Z
         
     def __rmul__(self,m):
         return self.__mul__(m)
