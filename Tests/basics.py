@@ -86,6 +86,7 @@ E = Matrix([[1,2,3],[4,5,6]])
 
 try:
     E + D
+    #if this works as it should "Matrix dimensions or types don't match", which is what should happen as they do not effectively match
     alert("Sum method not working, adding matrices of different sizes!")
 except:
     tests_passed += 1
@@ -100,6 +101,18 @@ A = Matrix([[1,2,3],[4,5,6],[7,8,9]])
 alpha = 2.5
 B = alpha * A
 C = Matrix([[2.5,5,7.5],[10,12.5,15],[17.5,20,22.5]])
+x = Vector([1,2,3])
+y = Vector([14,32,50])
+D = Matrix([[1,2,3],[2,4,6],[3,6,9]])
 
 if not isequal(B,C):
     alert("Integer-matrix multiplication sub-method not working")
+
+if not isequal(A*x,y) or not isequal(x*x.T(),D) or x.T()*x != 14:
+    alert("Matrix-vector multiplication not working")
+
+A *= x
+x *= x.T()
+
+if not isequal(A,y) or not isequal(x,D):
+    alert("rmul not working") #this only limited to the first two cases
