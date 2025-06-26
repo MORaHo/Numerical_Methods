@@ -46,7 +46,7 @@ def solve(A:Matrix,b:Vector):
         print('System cannot be solved')
         sys.exit()
 
-    if det(A) == 0:
+    if m == n and det(A) == 0:
         print("Solution may not be unique!")
 
     #this will be expanded to handle more and more cases, initially I intend to add a QR solver and in the end for this function to basically become the \ of matlab
