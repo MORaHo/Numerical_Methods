@@ -92,14 +92,13 @@ class ndarray():
                     
                     if type(x) == slice:
 
-
                         y_start = int(0 if y.start == None else y.start)
-                        y_end = int(len(self.matrix) if y.stop == None else y.stop)
+                        y_end = int(len(self.matrix)-1 if y.stop == None else y.stop)
                         x_start = int(0 if x.start == None else x.start)
-                        x_end = int(len(self.matrix[0]) if x.stop == None else x.stop)
+                        x_end = int(len(self.matrix[0])-1 if x.stop == None else x.stop)
 
-                        if i_n*i_m != (y_end-y_start+1)*(x_end-x_start+1):
-                            print("Item change dimensions do not match, check the what you are trying to change")
+                        if i_n != (y_end-y_start+1) or i_m != (x_end-x_start+1):
+                            print("Item change dimensions do not match, check the what you are trying to change (matrix input case)")
                             sys.exit()
 
                         for j in range(y_start,y_end+1):
@@ -110,10 +109,10 @@ class ndarray():
                     if type(x) == int:
                         
                         y_start = int(0 if y.start == None else y.start)
-                        y_end = int(len(self.matrix) if y.stop == None else y.stop)
+                        y_end = int(len(self.matrix)-1 if y.stop == None else y.stop)
 
                         if i_n != (y_end-y_start+1):
-                            print("Item change dimensions do not match, check the what you are trying to change")
+                            print("Item change dimensions do not match, check the what you are trying to change (column vector case)")
                             sys.exit()
                         
                         for j in range(y_start,y_end+1):
@@ -122,10 +121,10 @@ class ndarray():
                 elif type(y) == int and type(x) == slice:
 
                     x_start = int(0 if x.start == None else x.start)
-                    x_end = int(len(self.matrix) if x.stop == None else x.stop)
+                    x_end = int(len(self.matrix)-1 if x.stop == None else x.stop)
 
                     if i_n != (x_end-x_start+1):
-                        print("Item change dimensions do not match, check the what you are trying to change")
+                        print("Item change dimensions do not match, check the what you are trying to change (row vector case)")
                         sys.exit()
                     
                     for j in range(x_start,x_end+1):
@@ -136,14 +135,14 @@ class ndarray():
                 i_n = len(item)
                 if i_n == 1: #it's a row vector
                     start = int(0 if x.start == None else x.start)
-                    end = int(len(self.matrix) if x.stop == None else x.stop)
+                    end = int(len(self.matrix[0])-1 if x.stop == None else x.stop)
                     if type(y) != int:
                         print("Item dimensions too large, it is row vector, so cannot span multipe rows")
                 else:
                     start = int(0 if y.start == None else y.start)
-                    end = int(len(self.matrix) if y.stop == None else y.stop)
+                    end = int(len(self.matrix)-1 if y.stop == None else y.stop)
                     if type(x) != int:
-                        print("Item dimensions too large, it is row vector, so cannot span multipe rows")
+                        print("Item dimensions too large, it is column vector, so cannot span multipe columns")
 
                 if i_n != (end-start+1):
                     print("Item change dimensions do not match, check the what you are trying to change")
@@ -170,12 +169,11 @@ class ndarray():
         
     def __add__(self,B): # addition
 
-        M = self.matrix
-        if type(self) == type(B) and len(M) == len(B) and len(M[0]) == len(B[0]):
-            C = [ [ M[i][j]+B[i][j] for j in range(len(B[0])) ] for i in range(len(B)) ]
+        if type(self) == type(B) and len(self) == len(B) and len(self[0]) == len(B[0]):
+            C = [ [ self[i][j]+B[i][j] for j in range(len(B[0])) ] for i in range(len(B)) ]
             return Matrix(C)
         else:
-            print("Matrix dimensions or types don't match")
+            print("Matrix dimensions or types don't match! (Addition)")
             sys.exit()
 
     def __sub__(self,s): #subdivision
@@ -184,7 +182,7 @@ class ndarray():
         S = [ [ 0 for _ in range(len(M[0])) ] for _ in range(len(M)) ]
 
         if type(self) != type(s) or len(M) != len(s) or len(M[0]) != len(M[0]):
-            print("Matrix dimensions or types do not match")
+            print("Matrix dimensions or types do not match! (Subtraction)")
             sys.exit()          
         else:
             for i in range(len(M)):
@@ -280,7 +278,6 @@ class Matrix(ndarray):
                 else:
                     return super(Matrix, cls).__new__(cls)
             except:
- 
                 return Vector(data)
 
         else:
