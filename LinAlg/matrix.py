@@ -65,15 +65,28 @@ class ndarray():
         try:
 
             if type(index)==tuple and len(index)==2:
+
                 y,x = index
 
-                if type(y) == slice and (type(x) == slice or type(x) == int):
-                    M = self.matrix[y]
-                    for i,_ in enumerate(M):
-                        M[i] = M[i][x]
-                    return Matrix(M)
+                if type(y) == slice:
+                    y_start = int(0 if y.start == None else y.start)
+                    y_end = int(len(self) if y.stop == None else y.stop)
+                elif type(y) == int:
+                    y_start = y
+                    y_end = y+1
+                if type(x) == slice:
+                    x_start = int(0 if x.start == None else x.start)
+                    x_end = int(len(self[0]) if x.stop == None else x.stop)
+                elif type(x) == int:
+                    x_start = x
+                    x_end = x + 1
+       
+                M = [ [self[j][i] for i in range(x_start,x_end) ] for j in range(y_start,y_end) ]
 
-                return self.matrix[y][x]
+                if [len(M),len(M[0])] != [1,1]:
+                    return Matrix(M)
+                else:
+                    return M[0][0]
         
         except:
             return []
@@ -93,41 +106,41 @@ class ndarray():
                     if type(x) == slice:
 
                         y_start = int(0 if y.start == None else y.start)
-                        y_end = int(len(self.matrix)-1 if y.stop == None else y.stop)
+                        y_end = int(len(self.matrix) if y.stop == None else y.stop)
                         x_start = int(0 if x.start == None else x.start)
-                        x_end = int(len(self.matrix[0])-1 if x.stop == None else x.stop)
+                        x_end = int(len(self.matrix[0]) if x.stop == None else x.stop)
 
-                        if i_n != (y_end-y_start+1) or i_m != (x_end-x_start+1):
+                        if i_n != (y_end-y_start) or i_m != (x_end-x_start):
                             print("Item change dimensions do not match, check the what you are trying to change (matrix input case)")
                             sys.exit()
 
-                        for j in range(y_start,y_end+1):
-                            for i in range(x_start,x_end+1):
+                        for j in range(y_start,y_end):
+                            for i in range(x_start,x_end):
                                 self.matrix[j][i] = item[j-y_start][i-x_start]
 
                     
                     if type(x) == int:
                         
                         y_start = int(0 if y.start == None else y.start)
-                        y_end = int(len(self.matrix)-1 if y.stop == None else y.stop)
+                        y_end = int(len(self.matrix) if y.stop == None else y.stop)
 
-                        if i_n != (y_end-y_start+1):
+                        if i_n != (y_end-y_start):
                             print("Item change dimensions do not match, check the what you are trying to change (column vector case)")
                             sys.exit()
                         
-                        for j in range(y_start,y_end+1):
+                        for j in range(y_start,y_end):
                                 self.matrix[j][x] = item[j-y_start][x]
                 
                 elif type(y) == int and type(x) == slice:
 
                     x_start = int(0 if x.start == None else x.start)
-                    x_end = int(len(self.matrix)-1 if x.stop == None else x.stop)
+                    x_end = int(len(self.matrix[0]) if x.stop == None else x.stop)
 
-                    if i_n != (x_end-x_start+1):
+                    if i_n != (x_end-x_start):
                         print("Item change dimensions do not match, check the what you are trying to change (row vector case)")
                         sys.exit()
                     
-                    for j in range(x_start,x_end+1):
+                    for j in range(x_start,x_end):
                             self.matrix[x][j] = item[x][j-x_start]
 
             elif type(item) == Vector:
@@ -135,24 +148,24 @@ class ndarray():
                 i_n = len(item)
                 if i_n == 1: #it's a row vector
                     start = int(0 if x.start == None else x.start)
-                    end = int(len(self.matrix[0])-1 if x.stop == None else x.stop)
+                    end = int(len(self.matrix[0]) if x.stop == None else x.stop)
                     if type(y) != int:
                         print("Item dimensions too large, it is row vector, so cannot span multipe rows")
                 else:
                     start = int(0 if y.start == None else y.start)
-                    end = int(len(self.matrix)-1 if y.stop == None else y.stop)
+                    end = int(len(self.matrix) if y.stop == None else y.stop)
                     if type(x) != int:
                         print("Item dimensions too large, it is column vector, so cannot span multipe columns")
 
-                if i_n != (end-start+1):
+                if i_n != (end-start):
                     print("Item change dimensions do not match, check the what you are trying to change")
                     sys.exit()
                 
                 if i_n == 1: #again, row vector
-                    for j in range(start,end+1):
+                    for j in range(start,end):
                         self.matrix[y][j] = item[0][j-start]    
                 else:
-                    for j in range(start,end+1):
+                    for j in range(start,end):
                         self.matrix[j][x] = item[j-start][0]
                 
 

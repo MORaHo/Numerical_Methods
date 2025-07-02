@@ -7,6 +7,12 @@ from LinAlg.utils import eye
 from LinAlg.inv import inv
 from LinAlg.power import power
 
+###
+# The Richardson method is an iterative method for solving linear systems.
+# What is written here is what was learnt in class
+# Reference link: https://en.wikipedia.org/wiki/Modified_Richardson_iteration
+# While in class we called this the Richardson method, it is a general iterative method, and through the preconditioning matrix P we distinguish between the different methods.
+
 def richardson(A:Matrix,b:Vector,P:Matrix,x0:Vector,tol,nmax:int,alpha):
 
     ## Input Arguements:
@@ -42,12 +48,12 @@ def richardson(A:Matrix,b:Vector,P:Matrix,x0:Vector,tol,nmax:int,alpha):
     r = b - A*x
     normalized_res = norm(r) / norm(b)
 
-    while normalized_res > tol and k<nmax:
+    while normalized_res > tol and k < nmax:
 
         z = solve(P,r)
         x = x + alpha * z
         r = r - alpha*(A*z)
-        normalized_res = norm(r)/norm(b)
+        normalized_res = norm(r) / norm(b)
         k = k + 1
 
 

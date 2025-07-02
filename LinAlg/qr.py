@@ -35,7 +35,7 @@ def MGS_qr(A:Matrix):
     return [Q,R]
 
 def householder(x:Vector):
-    alpha = x[0][0]
+    alpha = x[0,0]
     s = norm(Vector(x[1:]))**2
     v = copy(x)
 
@@ -44,12 +44,11 @@ def householder(x:Vector):
     else:
         t = sqrt(alpha**2 + s)
         if alpha <= 0:
-            v[0][0] = alpha-t
+            v[0,0] = alpha-t
         else:
-            v[0][0] = -s / (alpha+t)
-
-        tau = 2 * v[0][0]**2 / (s+v[0][0]**2)
-        v = v/v[0][0]
+            v[0,0] = -s / (alpha+t)
+        tau = 2 * v[0,0]**2 / (s+v[0,0]**2)
+        v = v/v[0,0]
     return [v,tau]
 
 def qr_householder(A:Matrix):
