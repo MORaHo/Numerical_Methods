@@ -209,8 +209,7 @@ class ndarray():
         M = self.matrix
 
         if type(B) in numbers.__args__: #allows element wise moltiplication by scalar with the matrix
-
-            M = self.matrix
+            
             Z = [[ 0 for _ in range(len(M[0]))] for _ in range(len(M))]
             for j in range(len(M)):
                 for i in range(len(M[0])):
