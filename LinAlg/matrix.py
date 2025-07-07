@@ -148,12 +148,12 @@ class ndarray():
                 i_n = len(item)
                 if i_n == 1: #it's a row vector
                     start = int(0 if x.start == None else x.start)
-                    end = int(len(self.matrix[0]) if x.stop == None else x.stop)
+                    end = int(len(self.matrix[0]) if x.stop == None else x.stop)+1
                     if type(y) != int:
                         print("Item dimensions too large, it is row vector, so cannot span multipe rows")
                 else:
                     start = int(0 if y.start == None else y.start)
-                    end = int(len(self.matrix) if y.stop == None else y.stop)
+                    end = int(len(self.matrix) if y.stop == None else y.stop)+1
                     if type(x) != int:
                         print("Item dimensions too large, it is column vector, so cannot span multipe columns")
 
@@ -206,34 +206,33 @@ class ndarray():
 
     def __mul__(self,B): # element-wise scalar multiplication and dot product
 
-        M = self.matrix
+        n,m = self.size() #rows,columns
 
         if type(B) in numbers.__args__: #allows element wise moltiplication by scalar with the matrix
             
-            Z = [[ 0 for _ in range(len(M[0]))] for _ in range(len(M))]
-            for j in range(len(M)):
-                for i in range(len(M[0])):
-                    Z[j][i] = B*M[j][i]
+            Z = [[ B*self[j,i] for i in range(m)] for j in range(n)]
+            #for j in range(len(M)):
+            #    for i in range(len(M[0])):
+            #        Z[j][i] = B*M[j][i]
             
             return Matrix(Z)
 
-        elif len(M[0]) != len(B): #if the dimensions don't match the dotproduct cannot be performed
+        elif m != len(B): #if the dimensions don't match the dotproduct cannot be performed
             print("Dimensions of the two matrices don't match")
             sys.exit()
 
-        Z = Matrix([[ 0 for _ in range(len(B[0]))] for _ in range(len(M))])
-        n = len(M[0])
+        Z = Matrix([[ 0 for _ in range(len(B[0]))] for _ in range(n)])
         
         #dot-product
         for i in range(len(B[0])):
-            for j in range(len(M)):
+            for j in range(n):
                 sum = 0
-                for k in range(n):
-                    sum += M[j][k] * B[k][i]
-                Z[j][i] = sum
+                for k in range(m):
+                    sum += self[j,k] * B[k,i]
+                Z[j,i] = sum
         
         if len(Z) == 1 and len(Z[0]) == 1:
-            return Z[0][0]
+            return Z[0,0]
         else:
             return Z
         
