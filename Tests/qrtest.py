@@ -1,6 +1,12 @@
+import sys
+import init
+from LinAlg.utils import isequal
+from LinAlg.matrix import Matrix
+from LinAlg.qr import qr_householder as qr
+
 A = Matrix([[12,-51,4],[6,167,-68],[-4,24,-41]])
 #A = Matrix([[124,61,135],[31,129,10],[71,7,73],[95,87,56]])
-[QH,RH] = qrgs(A)
-print(QH)
-print(RH)
-print(QH*RH)
+[Q,R] = qr(A)
+
+if not isequal(A,Q*R):
+    print("Householder-rotation-based QR decomposition not working")
