@@ -1,5 +1,5 @@
-from typing import Union
 import sys
+from typing import Union
 
 numbers  = Union[int,float,complex]
 
@@ -27,9 +27,8 @@ class ndarray():
     
     def T(self): #returns matrix transpose
 
-        M = self.matrix
-        T = [ [ M[j][i] for j in range(len(M)) ] for i in range(len(M[0])) ]
-        return Matrix(T,len(T),len(T[0]))
+        T = [ [ self[j][i] for j in range(len(self)) ] for i in range(len(self[0])) ]
+        return Matrix(T, rows=len(self[0]), columns=len(self))
 
     def H(self): #complex conjugate equivalent of the tranpose
 
@@ -41,13 +40,13 @@ class ndarray():
         """Prints matrix in Matlab style, although the variable name is not printed"""
         string = "\n"
         
-        for j in range(len(self.matrix)):
+        for j in range(len(self)):
             string += "  "
-            for i in range(len(self.matrix[0])):
-                number = format(float(self.matrix[j][i]),'.4')
+            for i in range(len(self[0])):
+                number = format(float(self[j][i]),'.4')
                 string += str(number)
                 string += "  "
-            string += ("\n" + (j<len(self.matrix)-1)*"\n")
+            string += ("\n" + (j<len(self)-1)*"\n")
         return string
     
     def __len__(self):
@@ -116,44 +115,44 @@ class ndarray():
 
                         for j in range(y_start,y_end):
                             for i in range(x_start,x_end):
-                                self.matrix[j][i] = item[j-y_start][i-x_start]
+                                self[j][i] = item[j-y_start][i-x_start]
 
                     
                     if type(x) == int:
                         
                         y_start = int(0 if y.start == None else y.start)
-                        y_end = int(len(self.matrix) if y.stop == None else y.stop)
+                        y_end = int(len(self) if y.stop == None else y.stop)
 
                         if i_n != (y_end-y_start):
                             print("Item change dimensions do not match, check the what you are trying to change (column vector case)")
                             sys.exit()
                         
                         for j in range(y_start,y_end):
-                                self.matrix[j][x] = item[j-y_start][x]
+                                self[j][x] = item[j-y_start][x]
                 
                 elif type(y) == int and type(x) == slice:
 
                     x_start = int(0 if x.start == None else x.start)
-                    x_end = int(len(self.matrix[0]) if x.stop == None else x.stop)
+                    x_end = int(len(self[0]) if x.stop == None else x.stop)
 
                     if i_n != (x_end-x_start):
                         print("Item change dimensions do not match, check the what you are trying to change (row vector case)")
                         sys.exit()
                     
                     for j in range(x_start,x_end):
-                            self.matrix[x][j] = item[x][j-x_start]
+                            self[x][j] = item[x][j-x_start]
 
             elif type(item) == Vector:
                 
                 i_n = len(item)
                 if i_n == 1: #it's a row vector
                     start = int(0 if x.start == None else x.start)
-                    end = int(len(self.matrix[0]) if x.stop == None else x.stop)+1
+                    end = int(len(self[0]) if x.stop == None else x.stop)+1
                     if type(y) != int:
                         print("Item dimensions too large, it is row vector, so cannot span multipe rows")
                 else:
                     start = int(0 if y.start == None else y.start)
-                    end = int(len(self.matrix) if y.stop == None else y.stop)+1
+                    end = int(len(self) if y.stop == None else y.stop)+1
                     if type(x) != int:
                         print("Item dimensions too large, it is column vector, so cannot span multipe columns")
 
@@ -163,10 +162,10 @@ class ndarray():
                 
                 if i_n == 1: #again, row vector
                     for j in range(start,end):
-                        self.matrix[y][j] = item[0][j-start]    
+                        self[y][j] = item[0][j-start]    
                 else:
                     for j in range(start,end):
-                        self.matrix[j][x] = item[j-start][0]
+                        self[j][x] = item[j-start][0]
                 
 
             elif type(item) in numbers.__args__:
@@ -191,18 +190,16 @@ class ndarray():
 
     def __sub__(self,s): #subdivision
 
-        M = self.matrix
-        S = [ [ 0 for _ in range(len(M[0])) ] for _ in range(len(M)) ]
-
-        if type(self) != type(s) or len(M) != len(s) or len(M[0]) != len(M[0]):
+        if type(self) != type(s) or len(self) != len(s) or len(self[0]) != len(self[0]):
             print("Matrix dimensions or types do not match! (Subtraction)")
-            sys.exit()          
-        else:
-            for i in range(len(M)):
-                for j in range(len(M[0])):
-                    S[i][j] = M[i][j] - s[i][j]
+            sys.exit()        
+
+        S = [ [ 0 for _ in range(len(self[0])) ] for _ in range(len(self)) ]
+        for i in range(len(self)):
+            for j in range(len(self[0])):
+                S[i][j] = self[i][j] - s[i][j]
             
-            return Matrix(S)
+        return Matrix(S)
 
     def __mul__(self,B): # element-wise scalar multiplication and dot product
 
@@ -240,8 +237,8 @@ class ndarray():
         return self.__mul__(m)
 
     def __truediv__(self,s): #element-wise division
-        M = self.matrix
-        S = [[M[j][i]/s  for i in range(len(M[0])) ] for j in range(len(M))]
+        [n,m] = self.size()
+        S = [[self[j][i]/s  for i in range(m) ] for j in range(n)]
         return Matrix(S)
 
     def __pow__(self,b):
@@ -251,7 +248,7 @@ class ndarray():
             [rows,cols] = self.size()
             for j in range(rows):
                 for i in range(cols):
-                    I.append(self.matrix[j][i] ** b)
+                    I.append(self[j][i] ** b)
             return Matrix(I,rows,cols)
         
         # matmul didn't work for some reason I just chose to repurpose the power operator to permit element-wise matrix multiplication
@@ -264,13 +261,13 @@ class ndarray():
             P = []
             for j in range(rows):
                 for i in range(cols):
-                    P.append(self.matrix[j][i] * b[j][i])
+                    P.append(self[j][i] * b[j][i])
             return Matrix(P,rows,cols)
     
     def size(self):
         # returns [rows,columns]
         if type(self) == Matrix:
-            return [len(self.matrix),len(self.matrix[0])]
+            return [len(self),len(self[0])]
         elif type(self) == Vector:
             if self.col().matrix == self.matrix:
                 return [len(self.matrix),1]
@@ -306,34 +303,44 @@ class Matrix(ndarray):
 
 class Vector(ndarray):
 
-    def __init__(self,data,is_row:int=0):
+    def __init__(self,data,is_row:bool=False):
         if is_row and type(data[0]) != list:
-            super().__init__(data,1,len(data))
+            self.is_row = is_row
+            rows = 1
+            cols = len(data)
+            super().__init__(data,rows,cols)
         elif len(data) == 1 and type(data[0]) == list:
-            super().__init__(data,1,len(data[0]))
+            self.is_row = True
+            rows = 1
+            cols = len(data[0])
+            super().__init__(data,rows,cols)
         elif len(data) == 1:
-            super().__init__(data,1,1)
+            self.is_row = True
+            rows = 1
+            cols = 1
+            super().__init__(data,rows,cols)
         else:
-            super().__init__(data,len(data),1)
+            self.is_row = False
+            rows = len(data)
+            cols = 1
+            super().__init__(data,rows,cols)
 
     def col(self): #function to make vectors columns
 
-        x = self.matrix
-        if len(x) == 1: #matrix is row vector, need to return column vector
+        if self.is_row: #matrix is row vector, need to return column vector
             return self.T()
-        elif len(x[0]) == 1: #it's a column vector, no change is needed
+        else: #it's a column vector, no change is needed
             return self   
 
     def row(self): #function to make vectors columns
 
-        x = self.matrix
-        if len(x[0]) == 1: #matrix is column vector, need to return row vector
-            return self.T()
-        elif len(x) == 1: #it's a row vector, no change is needed
+        if self.is_row: #matrix is column vector, need to return row vector
             return self
+        else: #it's a row vector, no change is needed
+            return self.T()
         
     def sum(self):
-        rows = len(self.matrix)
+        rows = len(self)
         s = 0
         try:
             for j in range(rows):
@@ -344,4 +351,3 @@ class Vector(ndarray):
 
 def conj(integer:numbers):
     return complex(integer.real,-1*integer.imag)
-
