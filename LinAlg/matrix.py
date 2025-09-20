@@ -269,10 +269,9 @@ class ndarray():
         if type(self) == Matrix:
             return [len(self),len(self[0])]
         elif type(self) == Vector:
-            if self.col().matrix == self.matrix:
+            if not self.is_row:
                 return [len(self.matrix),1]
-            else:
-                return [1,len(self.matrix[0])]
+            return [1,len(self.matrix[0])]
 
 class Matrix(ndarray):
 
