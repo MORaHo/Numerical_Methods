@@ -1,0 +1,25 @@
+[build-system]
+requires = [
+  "setuptools >= 40.9.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mathsan"
+version = "0.0.1"
+authors = [
+  { name="Matteo Sanderson", email="matteosanderson@proton.me" },
+]
+description = "Library of numerical methods made using only native python"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/MORaHo/Numerical_Methods"
+Issues = "https://github.com/MORaHo/Numerical_Methods/issues"
