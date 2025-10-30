@@ -1,6 +1,6 @@
 from src.LinAlg.matrix import ndarray,Matrix
 
-def abs(x):
+def absol(x):
     if isinstance(x,ndarray):
         [rows,cols] = x.size()
         M = []
