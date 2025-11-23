@@ -61,7 +61,7 @@ def solve(A:Matrix,b:Vector):
     elif isequal(tril(A),A):
         x = fwd_sub(A,b)
     elif isequal(triu(A),A):
-        x = bkw_sub(A,y)
+        x = bkw_sub(A,b)
     elif m <= 16:
         [L,U,P] = lu(A)
         y = fwd_sub(L,P*b)
