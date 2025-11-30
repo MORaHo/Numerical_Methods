@@ -5,7 +5,7 @@ EPS = 1E-6
 #This is my implementation of Newton's algorithm for root-finding, applied to a system of linear and non-linear equations
 #For the functioning of the system, the inputs f and J_f need to lambda functions or just functions since using my mathematical functions will not work as they require a defined input rather than an arbirary one.
 
-def newton_sys(f:Vector,J_f:Matrix,x0:Vector,tol=EPS,nmax=1000):
+def newtonsys(f:Vector,J_f:Matrix,x0:Vector,tol=EPS,nmax=1000):
     
     n = 0
     err = tol+1
