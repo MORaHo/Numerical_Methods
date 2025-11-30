@@ -10,4 +10,4 @@ This is a work-in-progress personal project.
 ## Refernce Sources
 - https://uk.mathworks.com/help/matlab/index.html
 - Calcolo Scientifico - Alfio Quarteroni
-- Modellistica Numerica per Problemi Differenziali
+- Modellistica Numerica per Problemi Differenziali - Alfio Quarteroni
