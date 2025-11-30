@@ -7,3 +7,7 @@ The project by no means aims at optimization, if I wanted to do that I would be 
 I am just trying to learn and have fun since this is a class I took particular interest in.
 
 This is a work-in-progress personal project.
+## Refernce Sources
+- https://uk.mathworks.com/help/matlab/index.html
+- Calcolo Scientifico - Alfio Quarteroni
+- Modellistica Numerica per Problemi Differenziali
