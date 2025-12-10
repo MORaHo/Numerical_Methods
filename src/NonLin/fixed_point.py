@@ -1,7 +1,9 @@
+from src.NonLin import bisection
 from src.Misc.linspace import linspace
 from src.LinAlg.matrix import Vector
+from collections.abc import Callable
 
-def fixed_point(x0,f,nmax:int,toll:int,a,b):
+def fixed_point(f:Callable,nmax:int,toll:int,a,b,x0=None):
     
     """
     Input Parameters:
@@ -15,6 +17,10 @@ def fixed_point(x0,f,nmax:int,toll:int,a,b):
     succ -> Iteration vector (let's value is the solution)
     it -> Completed Iterationss
     """
+
+    # If there is no initial guess for the position of the zero, we use bisection to estimate it's position in a predictor-corrector algorithmic method
+    if x0==None:
+        x0 = bisection(a,b,f,toll*1E4)
 
     x = linspace(a,b,1000)
     phi = lambda x: f(x) + x
