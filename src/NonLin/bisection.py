@@ -3,7 +3,7 @@ from collections.abc import Callable
 
 EPS = 1E-6
 
-def bisection(a,b,f:Callable):
+def bisection(a,b,f:Callable,toll=EPS):
     
     # checks for obvious issues
     if f(a) == 0:
@@ -18,7 +18,7 @@ def bisection(a,b,f:Callable):
 
     c = (b+a)/2
 
-    while abs(f(c)) > EPS:
+    while abs(f(c)) > toll:
         if f(a)*f(c) < 0:
             b = c
         elif f(b)*f(c) < 0:
